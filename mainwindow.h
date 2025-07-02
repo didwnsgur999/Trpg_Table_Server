@@ -18,20 +18,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Backend* backend,QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
     void on_ProductDebug_clicked();
-
+    //서버 오픈됨.
     void on_serverOpenButton_clicked();
-
+    //종료시 저장해야되고, 다른 client 다 닫아줘야한다.
     void on_serverCloseButton_clicked();
 
 private:
-    Backend* m_backend;
     Ui::MainWindow *ui;
-
-    std::unique_ptr<ServerChat> m_serverChat;
 };
 #endif // MAINWINDOW_H

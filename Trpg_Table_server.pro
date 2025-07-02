@@ -16,6 +16,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     order.cpp \
+    room.cpp \
+    roommanager.cpp \
     serverchat.cpp
 
 HEADERS += \
@@ -25,6 +27,8 @@ HEADERS += \
     customer.h \
     mainwindow.h \
     order.h \
+    room.h \
+    roommanager.h \
     serverchat.h
 
 FORMS += \

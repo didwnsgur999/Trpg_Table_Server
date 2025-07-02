@@ -15,7 +15,11 @@ class Backend : QObject
 {
     Q_OBJECT
 public:
-    Backend(QObject* parent = nullptr);
+    static Backend& getInstance() {
+        static Backend instance;
+        return instance;
+    }
+
     void addProduct(QSharedPointer<Product> prod);
 
     const QVector<QSharedPointer<Product>>& getProducts() const;
@@ -51,6 +55,10 @@ public:
         return true;
     }
 private:
+    Backend(QObject* parent = nullptr);
+    Backend(const Backend& ref) {}
+    Backend& operator=(const Backend& ref) {}
+    ~Backend() {}
     QVector<QSharedPointer<Product>> productList;
 };
 

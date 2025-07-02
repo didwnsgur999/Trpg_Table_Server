@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "backend.h"
 #include <QLocale>
 #include <QTranslator>
 #include <QApplication>
@@ -17,8 +16,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    std::unique_ptr<Backend> backend = std::make_unique<Backend>();
-    MainWindow w(backend.get());
+    MainWindow w;
     w.show();
     return a.exec();
 }
