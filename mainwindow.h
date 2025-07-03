@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <memory.h>
+#include "customerui.h"
+#include "productui.h"
 
 class Backend;
 class ServerChat;
@@ -18,20 +20,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Backend* backend,QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    void on_ProductDebug_clicked();
-
-    void on_serverOpenButton_clicked();
-
-    void on_serverCloseButton_clicked();
+    void on_MainTabWidget_currentChanged(int index);
 
 private:
-    Backend* m_backend;
     Ui::MainWindow *ui;
-
-    std::unique_ptr<ServerChat> m_serverChat;
+    CustomerUI* m_customerUI;
+    ProductUI* m_productUI;
 };
 #endif // MAINWINDOW_H

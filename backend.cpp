@@ -6,6 +6,6 @@ void Backend::addProduct(QSharedPointer<Product> prod) {
     productList.push_back(prod);
 }
 
-const QVector<QSharedPointer<Product>>& Backend::getProducts() const {
+const QVector<QSharedPointer<Product>>& Backend::getProductList() const {
     return productList;
 }

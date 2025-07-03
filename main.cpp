@@ -1,5 +1,5 @@
-#include "mainwindow.h"
 #include "backend.h"
+#include "mainwindow.h"
 #include <QLocale>
 #include <QTranslator>
 #include <QApplication>
@@ -17,8 +17,13 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    std::unique_ptr<Backend> backend = std::make_unique<Backend>();
-    MainWindow w(backend.get());
+    Backend::getInstance().loadProductJson("products.json");
+    Backend::getInstance().loadCustomerJson("customer.json");
+    Backend::getInstance().loadOrderJson("order.json");
+    Backend::getInstance().ShowProductList();
+    Backend::getInstance().ShowCustomerList();
+    Backend::getInstance().ShowOrderList();
+    MainWindow w;
     w.show();
     return a.exec();
 }

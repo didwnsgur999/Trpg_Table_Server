@@ -8,8 +8,12 @@ class ServerChat:public QObject
 {
     Q_OBJECT
 public:
-    ServerChat(QObject* parent = 0);
-    QString OpenServer();
+    static ServerChat& getInstance() {
+        static ServerChat s;
+        return s;
+    }
+
+    bool OpenServer();
     int getPort() const {return tcpServer->serverPort();}
 
 private slots:
@@ -17,6 +21,10 @@ private slots:
     void echoData();
 
 private:
+    ServerChat(QObject* parent = 0);
+    ServerChat(const ServerChat& ref) {}
+    ServerChat& operator=(const ServerChat& ref) {}
+    ~ServerChat() {}
     QTcpServer *tcpServer;
 };
 
