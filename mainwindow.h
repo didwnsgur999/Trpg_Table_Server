@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <memory.h>
+#include "customerui.h"
+#include "productui.h"
 
 class Backend;
 class ServerChat;
@@ -22,13 +24,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_ProductDebug_clicked();
-    //서버 오픈됨.
-    void on_serverOpenButton_clicked();
-    //종료시 저장해야되고, 다른 client 다 닫아줘야한다.
-    void on_serverCloseButton_clicked();
+    void on_MainTabWidget_currentChanged(int index);
 
 private:
     Ui::MainWindow *ui;
+    CustomerUI* m_customerUI;
+    ProductUI* m_productUI;
 };
 #endif // MAINWINDOW_H

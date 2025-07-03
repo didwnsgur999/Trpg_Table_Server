@@ -7,7 +7,6 @@ class Room
 {
 public:
     Room();
-
     //getter setters
     QString getRName() const;
     QString getRMName() const;

@@ -13,7 +13,7 @@ public:
         return s;
     }
 
-    QString OpenServer();
+    bool OpenServer();
     int getPort() const {return tcpServer->serverPort();}
 
 private slots:
@@ -22,10 +22,10 @@ private slots:
 
 private:
     ServerChat(QObject* parent = 0);
-    QTcpServer *tcpServer;
     ServerChat(const ServerChat& ref) {}
     ServerChat& operator=(const ServerChat& ref) {}
     ~ServerChat() {}
+    QTcpServer *tcpServer;
 };
 
 #endif // SERVERCHAT_H

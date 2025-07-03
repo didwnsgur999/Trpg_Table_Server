@@ -14,38 +14,28 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
-     <widget class="QLabel" name="StateLabel">
-      <property name="text">
-       <string>State</string>
+     <widget class="QTabWidget" name="MainTabWidget">
+      <property name="currentIndex">
+       <number>-1</number>
       </property>
      </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="ProductDebug">
-        <property name="text">
-         <string>ProductDebug</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="serverOpenButton">
-        <property name="text">
-         <string>serverOpenButton</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="serverCloseButton">
-        <property name="text">
-         <string>serverCloseButton</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </item>
    </layout>
   </widget>
@@ -58,8 +48,38 @@
      <height>18</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>FILE</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuProduct">
+    <property name="title">
+     <string>Product</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuProduct"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionQuit"/>
+  </widget>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

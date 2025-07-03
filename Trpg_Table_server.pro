@@ -13,9 +13,11 @@ SOURCES += \
     Product.cpp \
     backend.cpp \
     customer.cpp \
+    customerui.cpp \
     main.cpp \
     mainwindow.cpp \
     order.cpp \
+    productui.cpp \
     room.cpp \
     roommanager.cpp \
     serverchat.cpp
@@ -25,14 +27,18 @@ HEADERS += \
     Product.h \
     backend.h \
     customer.h \
+    customerui.h \
     mainwindow.h \
     order.h \
+    productui.h \
     room.h \
     roommanager.h \
     serverchat.h
 
 FORMS += \
-    mainwindow.ui
+    customerui.ui \
+    mainwindow.ui \
+    productui.ui
 
 TRANSLATIONS += \
     Trpg_Table_ko_KR.ts

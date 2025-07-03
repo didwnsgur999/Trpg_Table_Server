@@ -1,3 +1,4 @@
+#include "backend.h"
 #include "mainwindow.h"
 #include <QLocale>
 #include <QTranslator>
@@ -16,6 +17,12 @@ int main(int argc, char *argv[])
             break;
         }
     }
+    Backend::getInstance().loadProductJson("products.json");
+    Backend::getInstance().loadCustomerJson("customer.json");
+    Backend::getInstance().loadOrderJson("order.json");
+    Backend::getInstance().ShowProductList();
+    Backend::getInstance().ShowCustomerList();
+    Backend::getInstance().ShowOrderList();
     MainWindow w;
     w.show();
     return a.exec();
