@@ -101,7 +101,7 @@ public:
     void ShowCustomerList(){
         for(int i=0; i<customerList.size(); i++){
             QSharedPointer<Customer> now=customerList[i];
-            qDebug()<<"customer: "<<now->getId()<<now->getName()<<now->getPhoneNum();
+            qDebug()<<"customer: "<<now->getId()<<now->getName()<<now->getPwd();
             for (auto it = now->getProduct().begin(); it != now->getProduct().end(); ++it) {
                 qDebug() << " - " << it.key() << ":" << it.value();
             }

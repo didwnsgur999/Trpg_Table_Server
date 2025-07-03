@@ -10,6 +10,8 @@ public:
     //getter setters
     QString getRName() const;
     QString getRMName() const;
+    QHash<QString,QTcpSocket*>& getRMember() const;
+    int getRCnt() const;
 
 private:
     //방이름

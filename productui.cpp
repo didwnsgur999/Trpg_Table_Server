@@ -22,7 +22,7 @@ ProductUI::~ProductUI()
 {
     delete ui;
 }
-//add/remove
+//add
 void ProductUI::on_AddButton_clicked()
 {
     //새로운 product생성
@@ -35,6 +35,13 @@ void ProductUI::on_AddButton_clicked()
     Backend::getInstance().addProduct(newProduct);
     loadProductTable(m_tableMain);
 }
+//remove
+void ProductUI::on_DeleteButton_clicked()
+{
+
+}
+
+
 // 반환값 = bool, 인자 = QSharedPointer<Product>& 인 filter를 통해 가져온 backend데이터를 걸러서 보여주는 함수.
 void ProductUI::loadProductTable(QStandardItemModel* table,std::function<bool(const QSharedPointer<Product>&)> filter){
     //항상 backend로부터 최신본을 받아온다, 테이블 모델 초기화
@@ -75,6 +82,7 @@ void ProductUI::on_SearchButton_clicked()
     auto filter=makeProductSearchFilter(attribute,token);
     loadProductTable(m_tableSearch,filter);
 }
+
 //서치용 필터 만드는 함수.
 std::function<bool(const QSharedPointer<Product>&)> ProductUI::makeProductSearchFilter(const QString& attribute, const QString& token) {
     return [attribute, token](const QSharedPointer<Product>& p) -> bool {
@@ -90,3 +98,4 @@ std::function<bool(const QSharedPointer<Product>&)> ProductUI::makeProductSearch
         return false;
     };
 }
+

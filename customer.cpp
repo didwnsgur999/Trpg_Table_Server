@@ -2,15 +2,15 @@
 
 Customer::Customer() {}
 
-Customer::Customer(int id, QString name, int phoneNum)
-    :m_id(id),m_name(name),m_phoneNum(phoneNum)
+Customer::Customer(int id, QString name, int pwd)
+    :m_id(id),m_name(name),m_pwd(pwd)
 {}
 
 QJsonObject Customer::toJson() const {
     QJsonObject obj;
     obj["id"] = getId();
     obj["name"] = getName();
-    obj["phonenum"] = getPhoneNum();
+    obj["pwd"] = getPwd();
     QJsonObject productobj;
     for(auto it = m_myProduct.begin();it!=m_myProduct.end();it++){
         productobj[it.key()]=it.value();
@@ -18,17 +18,13 @@ QJsonObject Customer::toJson() const {
     obj["myproduct"] = productobj;
     return obj;
 }
-//int m_id;
-//int m_phoneNum;
-//QString m_name;
-//QHash<QString,int> m_myProduct;
 
 QSharedPointer<Customer> Customer::fromJson(const QJsonObject& obj) {
     int id = obj["id"].toInt();
     QString name = obj["name"].toString();
-    int phonenum = obj["phonenum"].toInt();
+    int pwd = obj["pwd"].toInt();
 
-    auto customer = QSharedPointer<Customer>::create(id, name, phonenum);
+    auto customer = QSharedPointer<Customer>::create(id, name, pwd);
 
     if(obj.contains("myproduct")&&obj["myproduct"].isObject()){
         QJsonObject productObj=obj["myproduct"].toObject();
