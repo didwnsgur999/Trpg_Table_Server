@@ -29,6 +29,8 @@ private slots:
 
     void on_SearchButton_clicked();
 
+    void on_DeleteButton_clicked();
+
 private:
     Ui::ProductUI *ui;
     //table 관리 모델
