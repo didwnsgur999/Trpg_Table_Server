@@ -12,28 +12,34 @@ SOURCES += \
     Info.cpp \
     Product.cpp \
     backend.cpp \
+    chathandler.cpp \
     customer.cpp \
     customerui.cpp \
+    logworker.cpp \
     main.cpp \
     mainwindow.cpp \
     order.cpp \
     productui.cpp \
     room.cpp \
     roommanager.cpp \
-    serverchat.cpp
+    serverchat.cpp \
+    serveruser.cpp
 
 HEADERS += \
     Info.h \
     Product.h \
     backend.h \
+    chathandler.h \
     customer.h \
     customerui.h \
+    logworker.h \
     mainwindow.h \
     order.h \
     productui.h \
     room.h \
     roommanager.h \
-    serverchat.h
+    serverchat.h \
+    serveruser.h
 
 FORMS += \
     customerui.ui \

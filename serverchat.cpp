@@ -1,4 +1,5 @@
 #include "serverchat.h"
+#include "serveruser.h"
 #include <QtNetwork>
 #include <QtGUI>
 #include <QtWidgets>
@@ -6,26 +7,41 @@
 #define BLOCK_SIZE 1024
 #define TCP_PORT 30800  //Random num fix
 
-ServerChat::ServerChat(QObject* parent):QObject(parent) {}
+ServerChat::ServerChat(QObject* parent):QObject(parent) {
+    m_chatHander = new ChatHandler(this);
+}
 
 bool ServerChat::OpenServer(){
     const quint16 fixedPort = TCP_PORT;
-    tcpServer = new QTcpServer(this);
-    connect(tcpServer,SIGNAL(newConnection()),SLOT(clientConnect()));
-    if(!tcpServer->listen(QHostAddress::Any, fixedPort)){
-        qDebug()<<tr("Unable to start server :%1").arg(tcpServer->errorString());
+    m_tcpServer = new QTcpServer(this);
+    connect(m_tcpServer,SIGNAL(newConnection()),SLOT(clientConnect()));
+    if(!m_tcpServer->listen(QHostAddress::Any, fixedPort)){
+        qDebug()<<tr("Unable to start server :%1").arg(m_tcpServer->errorString());
         return false;
     }
     return true;
 }
+//접속시 socket얻는다.
 void ServerChat::clientConnect(){
-    QTcpSocket* clientConnection = tcpServer->nextPendingConnection();
+    QTcpSocket* clientConnection = m_tcpServer->nextPendingConnection();
+    //끊어지면 없애기
     connect(clientConnection,SIGNAL(disconnected()),clientConnection,SLOT(deleteLater()));
-    connect(clientConnection,SIGNAL(readyRead()),SLOT(echoData()));
+    //읽을게 왔다면 echodata
+    connect(clientConnection,SIGNAL(readyRead()),SLOT(getData()));
+    //일단 붙은 clientConnection을 user로 넣기.
+    ServerUser::getInstance().AssignUser(clientConnection);
 }
-void ServerChat::echoData(){
+void ServerChat::getData(){
     QTcpSocket* clientConnection=dynamic_cast<QTcpSocket*>(sender());
-    if(clientConnection->bytesAvailable()>BLOCK_SIZE) return;
-    QByteArray bytearray = clientConnection->read(BLOCK_SIZE);
-    clientConnection->write(bytearray);
+    if(!clientConnection) return;
+    //받은 데이터를 TcpSocket* 별로
+    m_buffer[clientConnection]+=clientConnection->readAll();
+
+    int newLineIndex;
+    while((newLineIndex=m_buffer[clientConnection].indexOf('\n'))!=-1){
+        QByteArray oneMessage = m_buffer[clientConnection].left(newLineIndex);
+        m_buffer[clientConnection].remove(0,newLineIndex+1);
+
+        m_chatHander->getByteData(clientConnection,oneMessage);
+    }
 }
