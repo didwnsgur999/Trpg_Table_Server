@@ -2,7 +2,7 @@
 
 Customer::Customer() {}
 
-Customer::Customer(int id, QString name, int pwd)
+Customer::Customer(int id, QString name, QString pwd)
     :m_id(id),m_name(name),m_pwd(pwd)
 {}
 
@@ -22,7 +22,7 @@ QJsonObject Customer::toJson() const {
 QSharedPointer<Customer> Customer::fromJson(const QJsonObject& obj) {
     int id = obj["id"].toInt();
     QString name = obj["name"].toString();
-    int pwd = obj["pwd"].toInt();
+    QString pwd = obj["pwd"].toString();
 
     auto customer = QSharedPointer<Customer>::create(id, name, pwd);
 

@@ -9,7 +9,7 @@ class Customer : public Info{
 public:
     //고객은 첫 생성시에는 id name 전화번호만 있으면 된다.
     Customer();
-    Customer(int id, QString name, int pwd);
+    Customer(int id, QString name, QString pwd);
 
     //Product를 Json으로 변경하는 함수
     QJsonObject toJson() const;
@@ -20,14 +20,14 @@ public:
     //Getter Setter
     int getId() const { return m_id; }
     QString getName() const { return m_name; }
-    int getPwd() const { return m_pwd;}
+    QString getPwd() const { return m_pwd;}
     QHash<QString,int>& getProduct() { return m_myProduct; }
 
 private:
     //id, 이름, pwd, 제품이름, pid
     int m_id;
     QString m_name;
-    int m_pwd;
+    QString m_pwd;
     QHash<QString,int> m_myProduct;
 };
 
