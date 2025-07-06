@@ -1,8 +1,8 @@
-#include "backend.h"
-#include "mainwindow.h"
+#include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <QApplication>
+#include "backend.h"
+#include "mainwindow.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

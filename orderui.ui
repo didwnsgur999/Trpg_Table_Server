@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ProductUI</class>
- <widget class="QWidget" name="ProductUI">
+ <class>OrderUI</class>
+ <widget class="QWidget" name="OrderUI">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
-    <height>445</height>
+    <width>748</width>
+    <height>602</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -31,149 +31,149 @@
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
-     <widget class="QTableView" name="MainTableView"/>
+     <widget class="QTableView" name="OTableView"/>
      <widget class="QToolBox" name="toolBox">
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="ProductAdd">
+      <widget class="QWidget" name="OInput">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>149</width>
-         <height>385</height>
+         <width>297</width>
+         <height>542</height>
         </rect>
        </property>
        <attribute name="label">
-        <string>제품 추가/변경</string>
+        <string>주문 추가/변경</string>
        </attribute>
+       <widget class="QPushButton" name="AddButton">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>340</y>
+          <width>101</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>주문 추가/변경</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="DeleteButton">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>380</y>
+          <width>101</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>주문 삭제</string>
+        </property>
+       </widget>
        <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>50</y>
-          <width>141</width>
+          <x>40</x>
+          <y>80</y>
+          <width>189</width>
           <height>24</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLabel" name="NameLabel">
+          <widget class="QLabel" name="CustomerLabel">
            <property name="text">
-            <string>제품명</string>
+            <string>회원 ID</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="NameLineEdit"/>
+          <widget class="QLineEdit" name="CustomerLineEdit"/>
          </item>
         </layout>
        </widget>
        <widget class="QWidget" name="layoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>90</y>
-          <width>141</width>
+          <x>40</x>
+          <y>120</y>
+          <width>189</width>
           <height>24</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QLabel" name="PriceLabel">
+          <widget class="QLabel" name="ProductLabel">
            <property name="text">
-            <string>제품 가격</string>
+            <string>제품 ID</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="PriceLineEdit"/>
+          <widget class="QLineEdit" name="ProductLineEdit"/>
          </item>
         </layout>
        </widget>
-       <widget class="QPushButton" name="AddButton">
+       <widget class="QWidget" name="layoutWidget_6">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>180</y>
-          <width>56</width>
-          <height>18</height>
+          <x>40</x>
+          <y>160</y>
+          <width>189</width>
+          <height>24</height>
          </rect>
         </property>
-        <property name="text">
-         <string>추가 / 변경</string>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="ProductCntLabel">
+           <property name="text">
+            <string>제품 개수</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="ProductCLineEdit_3"/>
+         </item>
+        </layout>
        </widget>
-       <widget class="QPushButton" name="DeleteButton">
+       <widget class="QWidget" name="">
         <property name="geometry">
          <rect>
-          <x>70</x>
-          <y>220</y>
-          <width>56</width>
-          <height>18</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>제거</string>
-        </property>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>10</y>
-          <width>141</width>
+          <x>40</x>
+          <y>40</y>
+          <width>189</width>
           <height>24</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QLabel" name="PIDlabel">
+          <widget class="QLabel" name="IDlabel">
            <property name="text">
-            <string>PID</string>
+            <string>주문 ID</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="PIDLineEdit"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="layoutWidget_3">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>130</y>
-          <width>141</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QLabel" name="CntLabel">
-           <property name="text">
-            <string>제품 수량</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="CntLineEdit"/>
+          <widget class="QLineEdit" name="IDLineEdit"/>
          </item>
         </layout>
        </widget>
       </widget>
-      <widget class="QWidget" name="ProductSearch">
+      <widget class="QWidget" name="OSearch">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>149</width>
-         <height>385</height>
+         <width>297</width>
+         <height>542</height>
         </rect>
        </property>
        <attribute name="label">
-        <string>제품 찾기</string>
+        <string>주문 검색</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -184,35 +184,14 @@
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
           </property>
-          <widget class="QComboBox" name="SearchComboBox">
-           <item>
-            <property name="text">
-             <string>id</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>name</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>price</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>cnt</string>
-            </property>
-           </item>
-          </widget>
+          <widget class="QComboBox" name="SearchComboBox"/>
           <widget class="QLineEdit" name="SearchLineEdit"/>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="SearchButton">
           <property name="text">
-           <string>Search</string>
+           <string>검색</string>
           </property>
          </widget>
         </item>

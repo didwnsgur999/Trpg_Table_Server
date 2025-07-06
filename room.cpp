@@ -1,20 +1,29 @@
 #include "room.h"
 //로그 찍는 worker만 만들어서 한다.
-Room::Room(QString rName,QString RMName,QTcpSocket* Socket)
-    :m_rName(rName),m_RMName(RMName)
+Room::Room(QString rName, int RMId, QTcpSocket *Socket)
+    : m_rName(rName)
+    , m_RMId(RMId)
 {
-    m_rMember[RMName]=Socket;
+    m_rMember[RMId] = Socket;
     m_logworker = new LogWorker(rName);
     m_logworker->start();
 }
 
-Room::~Room(){
+Room::~Room()
+{
     m_logworker->stop();
     m_logworker->wait();
     delete m_logworker;
 }
 
-void Room::logMessage(const QString& msg){
-    m_logworker->enqueueLog(msg);
+void Room::addMem(int Id,QTcpSocket* socket){
+    m_rMember[Id]=socket;
+}
+void Room::deleteMem(int Id){
+    m_rMember.remove(Id);
 }
 
+void Room::logMessage(const QString &msg)
+{
+    m_logworker->enqueueLog(msg);
+}

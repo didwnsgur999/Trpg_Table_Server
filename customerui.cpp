@@ -13,14 +13,6 @@ CustomerUI::~CustomerUI()
     delete ui;
 }
 
-void CustomerUI::on_AddButton_clicked()
-{
+void CustomerUI::on_AddButton_clicked() {}
 
-}
-
-
-void CustomerUI::on_DeleteButton_clicked()
-{
-
-}
-
+void CustomerUI::on_DeleteButton_clicked() {}
