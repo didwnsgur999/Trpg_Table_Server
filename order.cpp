@@ -15,7 +15,7 @@ QJsonObject Order::toJson() const
     obj["id"] = getId();
     obj["customerId"] = getCID();
     obj["productId"] = getPID();
-    obj["productcnt"] = getCnt();
+    obj["productCnt"] = getCnt();
     return obj;
 }
 
@@ -24,5 +24,5 @@ QSharedPointer<Order> Order::fromJson(const QJsonObject &obj)
     return QSharedPointer<Order>::create(obj["id"].toInt(),
                                          obj["customerId"].toInt(),
                                          obj["productId"].toInt(),
-                                         obj["productcnt"].toInt());
+                                         obj["productCnt"].toInt());
 }

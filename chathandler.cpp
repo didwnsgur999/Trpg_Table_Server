@@ -17,7 +17,6 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
     QString cmd = obj.value("cmd").toString();
 
     //이 아래가 signal처리 connect는 기본적으로 되어있어야한다.
-    //if(cmd==)
     if (cmd == "login") {
         ChatHandler::loginHandle(clientSocket, obj);
     } else if (cmd == "chat") {
@@ -27,13 +26,13 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
         ChatHandler::productAddHandle(clientSocket, obj);
     } else if (cmd == "add_c") {
         //on the work
-        //ChatHandler::customerAddHandle(clientSocket, obj);
+        ChatHandler::customerAddHandle(clientSocket, obj);
     } else if (cmd == "add_o") {
         //on the work
-        //ChatHandler::orderAddHandle(clientSocket, obj);
+        ChatHandler::orderAddHandle(clientSocket, obj);
     } else if (cmd == "show_r") {
         //on the work
-        //ChatHandler::showRoomHandle(clientSocket, obj);
+        ChatHandler::showRoomHandle(clientSocket, obj);
     } else if (cmd == "add_r") {
         // on the work - no debug
         ChatHandler::addRoomHandle(clientSocket, obj);
@@ -96,17 +95,17 @@ void ChatHandler::customerAddHandle(QTcpSocket *clientSocket, const QJsonObject 
     auto newcustomer = Customer::fromJson(obj);
     //backend에 저장.
     Backend::getInstance().addCustomer(newcustomer);
-
 }
 void ChatHandler::productAddHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
 {
     qDebug() << "append product sequence";
-    QString name = obj["pName"].toString();
-    int id = obj["pId"].toInt();
-    int price = obj["pPrice"].toInt();
-    int cnt = obj["pCnt"].toInt();
-    QSharedPointer<Product> newproduct = QSharedPointer<Product>::create(id, name, price, cnt);
+    auto newproduct = Product::fromJson(obj);
     Backend::getInstance().addProduct(newproduct);
+}
+void ChatHandler::orderAddHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    qDebug() << "append order sequence";
+    auto neworder = Order::fromJson(obj);
+    Backend::getInstance().addOrder(neworder);
 }
 void ChatHandler::showRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     qDebug()<<"show room sequence";
