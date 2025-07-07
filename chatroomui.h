@@ -2,6 +2,7 @@
 #define CHATROOMUI_H
 
 #include <QWidget>
+#include <QStandardItemModel>
 
 namespace Ui {
 class ChatRoomUI;
@@ -15,8 +16,11 @@ public:
     explicit ChatRoomUI(QWidget *parent = nullptr);
     ~ChatRoomUI();
 
+    void addAllRoom();
+
 private:
     Ui::ChatRoomUI *ui;
+    QStandardItemModel* m_roomListView;
 };
 
 #endif // CHATROOMUI_H

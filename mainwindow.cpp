@@ -59,7 +59,11 @@ void MainWindow::on_MainTabWidget_currentChanged(int index)
         break;
     case 3:
         //m_ChatRoomUI
+        m_chatRoomUI->addAllRoom();
+        break;
+    case 4:
 
         break;
     }
+
 }

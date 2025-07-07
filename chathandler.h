@@ -25,7 +25,7 @@ private:
     void customerAddHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void orderAddHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     //방 관련 시퀀스
-    void showRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
+    void listRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void addRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void deleteRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void joinRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);

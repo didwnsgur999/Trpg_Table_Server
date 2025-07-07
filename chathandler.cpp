@@ -30,9 +30,9 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
     } else if (cmd == "add_o") {
         //on the work
         ChatHandler::orderAddHandle(clientSocket, obj);
-    } else if (cmd == "show_r") {
+    } else if (cmd == "list_r") {
         //on the work
-        ChatHandler::showRoomHandle(clientSocket, obj);
+        ChatHandler::listRoomHandle(clientSocket, obj);
     } else if (cmd == "add_r") {
         // on the work - no debug
         ChatHandler::addRoomHandle(clientSocket, obj);
@@ -55,15 +55,16 @@ void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
     QString pwd = obj["cPwd"].toString();
     qDebug()<<"이름:"<< name<<pwd;
     auto customer = Backend::getInstance().searchCustomerLogin(name,pwd);
+    ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),name);
 
     //serveruser처리와 다시 보내기
     QJsonObject ret;
     ret["cmd"] = "ret_login";
     if(customer==nullptr){
-        ret["text"] = "login failed";
+        ret["text"] = "failed";
     }else{
         ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),customer->getName());
-        ret["text"] = "login success";
+        ret["text"] = "success";
     }
 
     QJsonDocument doc(ret);
@@ -82,7 +83,7 @@ void ChatHandler::chatHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
     ret["cmd"] = "ret_chat";
     if(room==nullptr){
         //본인한테 방에 없다고 알리기
-        ret["text"]="you're not in the room";
+        ret["text"]="success";
         QJsonDocument doc(ret);
         emit sendMessage(clientSocket,doc);
     }else{
@@ -116,9 +117,9 @@ void ChatHandler::customerAddHandle(QTcpSocket *clientSocket, const QJsonObject 
         //backend에 저장.
         Backend::getInstance().addCustomer(newcustomer);
         ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),customer->getName());
-        ret["text"] = "Assign success";
+        ret["text"] = "success";
     }else{
-        ret["text"] = "Assign failed";
+        ret["text"] = "failed";
     }
 
     QJsonDocument doc(ret);
@@ -135,8 +136,25 @@ void ChatHandler::orderAddHandle(QTcpSocket *clientSocket, const QJsonObject &ob
     auto neworder = Order::fromJson(obj);
     Backend::getInstance().addOrder(neworder);
 }
-void ChatHandler::showRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
-    qDebug()<<"show room sequence";
+void ChatHandler::listRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    qDebug()<<"list room sequence";
+    auto vec = RoomManager::getInstance().getAllRoom();
+
+    QJsonObject ret;
+    ret["cmd"] = "ret_list_r";
+    QJsonObject roomobj;
+
+    for(auto i:vec){
+        QString name = i->getRName();
+        int cnt = i->getRCnt();
+        roomobj["name"] = name;
+        roomobj["cnt"] = cnt;
+    }
+
+    ret["roomlist"] = roomobj;
+
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
 }
 void ChatHandler::addRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
 {
@@ -149,10 +167,9 @@ void ChatHandler::addRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj
     ret["cmd"] = "ret_add_r";
     //yes = return json 생성했다.
     if(RoomManager::getInstance().addRoom(rName,clientSocket)){
-        ret["text"] = "your room added";
+        ret["text"] = "success";
     } else {
-    //no = return 실패했다.
-        ret["text"] = "room make failed";
+        ret["text"] = "failed";
     }
     //doc보내기
     QJsonDocument doc(ret);
@@ -166,9 +183,9 @@ void ChatHandler::deleteRoomHandle(QTcpSocket *clientSocket, const QJsonObject &
     QJsonObject ret;
     ret["cmd"] = "ret_del_r";
     if(RoomManager::getInstance().deleteRoom(rName)){
-        ret["text"] = "room deleted complete";
+        ret["text"] = "success";
     } else {
-        ret["text"] = "room delete fail";
+        ret["text"] = "failed";
     }
     //doc보내기
     QJsonDocument doc(ret);
@@ -183,9 +200,9 @@ void ChatHandler::joinRoomHandle(QTcpSocket *clientSocket, const QJsonObject &ob
     QJsonObject ret;
     ret["cmd"] = "ret_join_r";
     if(RoomManager::getInstance().joinRoom(rName,clientSocket)){
-        ret["text"] = "room join complete";
+        ret["text"] = "success";
     } else {
-        ret["text"] = "room join fail";
+        ret["text"] = "failed";
     }
     //doc보내기
     QJsonDocument doc(ret);
@@ -200,9 +217,9 @@ void ChatHandler::leaveRoomHandle(QTcpSocket *clientSocket, const QJsonObject &o
     QJsonObject ret;
     ret["cmd"] = "ret_leave_r";
     if(RoomManager::getInstance().leaveRoom(rName,clientSocket)){
-        ret["text"] = "room leave complete";
+        ret["text"] = "success";
     } else {
-        ret["text"] = "room leave fail";
+        ret["text"] = "failed";
     }
     //doc보내기
     QJsonDocument doc(ret);
