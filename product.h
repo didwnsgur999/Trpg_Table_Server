@@ -4,6 +4,7 @@
 #include <QSharedPointer> // shared_ptr, make_shared
 #include <QString>
 #include "Info.h"
+#include <QPixmap>
 class Product : public Info
 {
 public:
@@ -28,6 +29,8 @@ public:
     int getPrice() const { return m_price; }
     void setCnt(int cnt) { m_cnt = cnt; }
     int getCnt() const { return m_cnt; }
+    void setImage(const QPixmap& image);
+    QPixmap getImage() const;
 
 private:
     //id, 이름, 가격, 갯수
@@ -35,5 +38,6 @@ private:
     QString m_name;
     int m_price;
     int m_cnt;
+    QPixmap m_image;
 };
 #endif // PRODUCT_H

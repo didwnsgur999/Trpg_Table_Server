@@ -58,7 +58,7 @@ void ServerChat::getData()
     }
 }
 //chatHandler에서 처리된 데이터 보내기
-void sendData(QTcpSocket* clientSocket,const QJsonDocument &doc){
+void ServerChat::sendData(QTcpSocket* clientSocket,const QJsonDocument &doc){
     QByteArray data = doc.toJson(QJsonDocument::Compact);
     data.append('\n'); //구분자
     clientSocket->write(data);

@@ -22,12 +22,14 @@ MainWindow::MainWindow(QWidget *parent)
     m_productUI = new ProductUI(this);
     m_orderUI = new OrderUI(this);
     m_chatRoomUI = new ChatRoomUI(this);
+    m_debugUI = new DebugUI(this);
 
     // 스택에 추가 먼저 넣은 순서대로 0, 1, 2... 이다.
     ui->MainTabWidget->addTab(m_customerUI, tr("고객 정보"));
     ui->MainTabWidget->addTab(m_productUI, tr("제품 정보"));
     ui->MainTabWidget->addTab(m_orderUI, tr("주문 정보"));
     ui->MainTabWidget->addTab(m_chatRoomUI,tr("채팅방 확인"));
+    ui->MainTabWidget->addTab(m_debugUI,tr("디버그"));
     // 첫 화면은 고객정보
     ui->MainTabWidget->setCurrentIndex(0);
 }
@@ -57,6 +59,4 @@ void MainWindow::on_MainTabWidget_currentChanged(int index)
         //m_ChatRoomUI
         break;
     }
-
-
 }

@@ -4,6 +4,9 @@
 #include <QStandardItemModel>
 #include <QWidget>
 #include "product.h"
+class QFile;
+class QProgressDialog;
+
 namespace Ui {
 class ProductUI;
 }
@@ -15,6 +18,7 @@ class ProductUI : public QWidget
 public:
     explicit ProductUI(QWidget *parent = nullptr);
     ~ProductUI();
+
     //getter,setter
     QStandardItemModel *getTableMain() { return m_tableMain; }
 
@@ -23,6 +27,12 @@ public:
                           std::function<bool(const QSharedPointer<Product> &)> filter = nullptr);
     std::function<bool(const QSharedPointer<Product> &)> makeProductSearchFilter(
         const QString &attribute, const QString &token);
+
+
+    //사진 가져오기, 디스플레이용 함수
+    QFile *file;
+    QString fileName;
+    QString encodePixmapToBase64(const QPixmap& pixmap);
 
 private slots:
     void on_AddButton_clicked();
@@ -33,11 +43,21 @@ private slots:
 
     void on_DeleteButton_clicked();
 
+    void on_ImageButton_clicked();
+
+    void on_MainTableView_entered(const QModelIndex &index);
+
+
+
 private:
     Ui::ProductUI *ui;
     //table 관리 모델
     QStandardItemModel *m_tableMain;
     QStandardItemModel *m_tableSearch;
+    QPixmap m_selectedImage;
+
+    //openfile
+    void openFile();
 };
 
 #endif // PRODUCTUI_H

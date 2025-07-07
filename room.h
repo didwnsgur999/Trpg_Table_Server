@@ -13,10 +13,10 @@ public:
     void deleteMem(int Id);
 
     //getter setters
-    QString getRName() const;
-    QString getRMId() const;
-    QHash<QString, QTcpSocket *> &getRMember() const;
-    int getRCnt() const;
+    QString getRName() const {return m_rName;}
+    int getRMId() const {return m_RMId;}
+    const QHash<int, QTcpSocket *> &getRMember() const {return m_rMember;}
+    int getRCnt() const {return m_rCnt;}
 
     //로그 메시지 저장.
     void logMessage(const QString &msg);

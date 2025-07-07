@@ -26,6 +26,9 @@ public:
     void addProduct(QSharedPointer<Product> prod);
     void addCustomer(QSharedPointer<Customer> cust);
     void addOrder(QSharedPointer<Order> ord);
+    void deleteProduct(int id);
+    void deleteCustomer(int id);
+    void deleteOrder(int id);
 
     const QVector<QSharedPointer<Product>> &getProductList() const;
     void setProductList(const QVector<QSharedPointer<Product>> &list) { productList = list; }

@@ -6,6 +6,7 @@
 #include "productui.h"
 #include "orderui.h"
 #include "chatroomui.h"
+#include "debugui.h"
 #include <memory.h>
 
 class Backend;
@@ -34,5 +35,6 @@ private:
     ProductUI *m_productUI;
     OrderUI *m_orderUI;
     ChatRoomUI *m_chatRoomUI;
+    DebugUI *m_debugUI;
 };
 #endif // MAINWINDOW_H
