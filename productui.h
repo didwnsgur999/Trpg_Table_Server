@@ -5,7 +5,6 @@
 #include <QWidget>
 #include "product.h"
 class QFile;
-class QProgressDialog;
 
 namespace Ui {
 class ProductUI;
@@ -46,8 +45,6 @@ private slots:
     void on_ImageButton_clicked();
 
     void on_MainTableView_entered(const QModelIndex &index);
-
-
 
 private:
     Ui::ProductUI *ui;

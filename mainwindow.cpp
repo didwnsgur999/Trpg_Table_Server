@@ -47,6 +47,7 @@ void MainWindow::on_MainTabWidget_currentChanged(int index)
 {
     switch (index) {
     case 0:
+        m_customerUI->loadCustomerTable(m_customerUI->getTableMain());
         //m_customerUI
         break;
     case 1:
@@ -54,9 +55,11 @@ void MainWindow::on_MainTabWidget_currentChanged(int index)
         break;
     case 2:
         //m_orderUI
+
         break;
     case 3:
         //m_ChatRoomUI
+
         break;
     }
 }

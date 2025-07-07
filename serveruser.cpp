@@ -8,23 +8,29 @@ bool ServerUser::AssignUser(QTcpSocket *userSocket)
     if (m_curuser.contains(userSocket)) {
         return false;
     }
+    //임시로 저장.
     m_curuser[userSocket] = -1;
+
     return true;
 }
-bool ServerUser::ChangeUserId(QTcpSocket *userSocket, int userId)
+//유저 로그인시 불러올거임.
+bool ServerUser::ChangeUserId(QTcpSocket *userSocket, int userId, QString userName)
 {
     if (m_curuser.contains(userSocket))
         return false;
     m_curuser[userSocket] = userId;
+    m_userName[userId]=userName;
 
     return true;
 }
+//유저 접속 종료시 불러올거임.
 bool ServerUser::RemoveUser(QTcpSocket *userSocket)
 {
     if (m_curuser.contains(userSocket))
         return false;
     //hash정리하기
-    m_userName.remove(m_curuser[userSocket]);
+    if(m_userName.contains(m_curuser.value(userSocket)))
+        m_userName.remove(m_curuser.value(userSocket));
     m_curuser.remove(userSocket);
     return true;
 }

@@ -17,11 +17,15 @@ public:
     //Json을 Product로 변경하는 함수.
     //외부에서 객체 없이 부르는 경우 사용해야 하므로 static이 붙는다.
     static QSharedPointer<Customer> fromJson(const QJsonObject &obj);
-
+    static QSharedPointer<Customer> fromJsonEXID(const QJsonObject &obj);
     //Getter Setter
     int getId() const { return m_id; }
+    void setId(int id) { m_id=id;}
     QString getName() const { return m_name; }
+    void setName(QString name) { m_name=name;}
     QString getPwd() const { return m_pwd; }
+    void setPwd(QString pwd) { m_pwd=pwd;}
+
     QHash<QString, int> &getProduct() { return m_myProduct; }
 
 private:

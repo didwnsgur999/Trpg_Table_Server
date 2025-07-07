@@ -1,5 +1,5 @@
 #include "customer.h"
-
+#include "Backend.h"
 Customer::Customer() {}
 
 Customer::Customer(int id, QString name, QString pwd)
@@ -18,6 +18,7 @@ QJsonObject Customer::toJson() const
     for (auto it = m_myProduct.begin(); it != m_myProduct.end(); it++) {
         productobj[it.key()] = it.value();
     }
+
     obj["myproduct"] = productobj;
     return obj;
 }
@@ -25,6 +26,22 @@ QJsonObject Customer::toJson() const
 QSharedPointer<Customer> Customer::fromJson(const QJsonObject &obj)
 {
     int id = obj["id"].toInt();
+    QString name = obj["name"].toString();
+    QString pwd = obj["pwd"].toString();
+    auto customer = QSharedPointer<Customer>::create(id, name, pwd);
+
+    if (obj.contains("myproduct") && obj["myproduct"].isObject()) {
+        QJsonObject productObj = obj["myproduct"].toObject();
+        for (auto it = productObj.begin(); it != productObj.end(); ++it) {
+            customer->getProduct()[it.key()] = it.value().toInt();
+        }
+    }
+    return customer;
+}
+
+QSharedPointer<Customer> Customer::fromJsonEXID(const QJsonObject &obj)
+{
+    int id = Backend::getInstance().getNewCusId();
     QString name = obj["name"].toString();
     QString pwd = obj["pwd"].toString();
 

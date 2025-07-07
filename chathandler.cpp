@@ -50,11 +50,24 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
 void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
 {
     //on the work
-    //여기 만들려면 customer쪽 완성되고, id결정하는 시퀀스가 있어야 한다.
     qDebug() << "login sequence";
     QString name = obj["cName"].toString();
     QString pwd = obj["cPwd"].toString();
-    qDebug() << name << pwd;
+    qDebug()<<"이름:"<< name<<pwd;
+    auto customer = Backend::getInstance().searchCustomerLogin(name,pwd);
+
+    //serveruser처리와 다시 보내기
+    QJsonObject ret;
+    ret["cmd"] = "ret_login";
+    if(customer==nullptr){
+        ret["text"] = "login failed";
+    }else{
+        ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),customer->getName());
+        ret["text"] = "login success";
+    }
+
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
 }
 //커멘드, 메시지, 방이름 보내줘야 함.
 void ChatHandler::chatHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
@@ -91,10 +104,25 @@ void ChatHandler::chatHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
 //회원가입시 오는거 처리.
 void ChatHandler::customerAddHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     qDebug()<<"append customer sequence";
-    //새로운 customer 만들고(id, name, pwd)
-    auto newcustomer = Customer::fromJson(obj);
-    //backend에 저장.
-    Backend::getInstance().addCustomer(newcustomer);
+    //새로운 customer 만들고(name, pwd)
+    QString name = obj["cName"].toString();
+    QString pwd = obj["cPwd"].toString();
+    auto customer = Backend::getInstance().searchCustomerLogin(name,pwd);
+
+    QJsonObject ret;
+    ret["cmd"] = "ret_add_c";
+    if(customer==nullptr){
+        auto newcustomer = Customer::fromJsonEXID(obj);
+        //backend에 저장.
+        Backend::getInstance().addCustomer(newcustomer);
+        ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),customer->getName());
+        ret["text"] = "Assign success";
+    }else{
+        ret["text"] = "Assign failed";
+    }
+
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
 }
 void ChatHandler::productAddHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
 {

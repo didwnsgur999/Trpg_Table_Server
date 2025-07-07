@@ -1,7 +1,6 @@
 #include "productui.h"
 #include "ui_productui.h"
 
-#include "product.h"
 #include "backend.h"
 #include <QFile>
 #include <QFileDialog>
@@ -43,6 +42,7 @@ void ProductUI::on_AddButton_clicked()
 //remove
 void ProductUI::on_DeleteButton_clicked() {
     Backend::getInstance().deleteProduct(ui->PIDLineEdit->text().toInt());
+    loadProductTable(m_tableMain);
 }
 
 // 반환값 = bool, 인자 = QSharedPointer<Product>& 인 filter를 통해 가져온 backend데이터를 걸러서 보여주는 함수.

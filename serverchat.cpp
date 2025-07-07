@@ -31,6 +31,8 @@ void ServerChat::clientConnect()
     QTcpSocket *clientConnection = m_tcpServer->nextPendingConnection();
     //끊어지면 없애기
     connect(clientConnection, &QTcpSocket::disconnected, this, [=](){
+        //서버 접속자에서 빼기 + 방에 있다면 정리하기
+
         ServerUser::getInstance().RemoveUser(clientConnection);
         clientConnection->deleteLater();
     });

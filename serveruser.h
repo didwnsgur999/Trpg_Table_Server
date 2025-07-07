@@ -12,7 +12,7 @@ public:
     }
     //유저 등록 제거
     bool AssignUser(QTcpSocket *userSocket);
-    bool ChangeUserId(QTcpSocket *userSocket, int userId);
+    bool ChangeUserId(QTcpSocket *userSocket, int userId, QString userName);
     bool RemoveUser(QTcpSocket *userSocket);
 
     //왠만하면 Id랑 QTcpSocket*으로 상대방 찾을수 잇으면 좋겠는데?

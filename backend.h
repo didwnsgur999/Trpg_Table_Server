@@ -30,8 +30,25 @@ public:
     void deleteCustomer(int id);
     void deleteOrder(int id);
 
+    //ID 생성 프로토콜 - 나중에 템플릿으로 만들어도 될듯.
+    void setMaxCusId();
+    void setMaxProId();
+    void setMaxOrdId();
+    int getNewCusId() {return ++MAX_CID; }
+    int getNewProId() {return ++MAX_PID; }
+    int getNewOrdId() {return ++MAX_OID; }
+
+    //QSharedPointer<Product>& searchProduct(int id);
+    QSharedPointer<Customer> searchCustomerLogin(QString name, QString pwd);
+    //QSharedPointer<Order>& searchOrder(int id);
+
+    //getProduct,customer,orderlist
     const QVector<QSharedPointer<Product>> &getProductList() const;
     void setProductList(const QVector<QSharedPointer<Product>> &list) { productList = list; }
+    const QVector<QSharedPointer<Customer>> &getCustomerList() const;
+    void setCustomerList(const QVector<QSharedPointer<Customer>> &list) { customerList = list; }
+    const QVector<QSharedPointer<Order>> &getOrderList() const;
+    void setOrderList(const QVector<QSharedPointer<Order>> &list) { orderList = list; }
 
     //save json
     bool saveProductJson(const QString &filename)
@@ -42,7 +59,10 @@ public:
     {
         return saveJson<Customer>(filename, customerList);
     }
-    bool saveOrderJson(const QString &filename) { return saveJson<Order>(filename, orderList); }
+    bool saveOrderJson(const QString &filename)
+    {
+        return saveJson<Order>(filename, orderList);
+    }
 
     //load json
     bool loadProductJson(const QString &filename)
@@ -71,6 +91,7 @@ public:
     bool saveJson(const QString &filename, const QVector<QSharedPointer<T>> &data)
     {
         QJsonArray array;
+        qDebug()<<"데이터 사이즈 : "<<data.size();
         for (const auto &d : data)
             array.append(d->toJson());
 
@@ -105,7 +126,7 @@ public:
     }
 
     //===========================================//
-    //  show current list
+    //  show current list for debug
     //===========================================//
     void ShowProductList()
     {
@@ -142,6 +163,9 @@ private:
     QVector<QSharedPointer<Product>> productList;
     QVector<QSharedPointer<Customer>> customerList;
     QVector<QSharedPointer<Order>> orderList;
+    int MAX_CID;
+    int MAX_PID;
+    int MAX_OID;
 };
 
 #endif // BACKEND_H

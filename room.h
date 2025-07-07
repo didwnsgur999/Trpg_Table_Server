@@ -9,8 +9,10 @@ class Room
 public:
     Room(QString rName, int m_RMId, QTcpSocket *socket);
     ~Room();
+    //방에 멤버 넣기
     void addMem(int Id,QTcpSocket* socket);
     void deleteMem(int Id);
+    //방 방장 변경하기
 
     //getter setters
     QString getRName() const {return m_rName;}
