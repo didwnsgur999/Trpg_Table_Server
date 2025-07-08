@@ -17,12 +17,10 @@ bool ServerUser::AssignUser(QTcpSocket *userSocket)
 //유저 로그인시 불러올거임.
 bool ServerUser::ChangeUserId(QTcpSocket *userSocket, int userId, QString userName)
 {
-    qDebug()<<"체인지 유저 아이디";
     if (!m_curuser.contains(userSocket))
         return false;
     m_curuser[userSocket] = userId;
     m_userName[userId]=userName;
-    qDebug()<<"유저 id"<<userId<<"유저이름"<<"userName";
 
     return true;
 }

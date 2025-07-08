@@ -8,14 +8,12 @@ bool RoomManager::addRoom(const QString &roomName, QTcpSocket *socket)
         return false;
     //룸마 ID가 필요함. -> serveruser에서 Id들고오는게 맞겠다.
     int m_RMId = ServerUser::getInstance().SearchIdSocket(socket);
-    qDebug()<<"룸마 : " << m_RMId;
     if(m_RMId==-1){
         return false;
     }
     QSharedPointer<Room> newroom = QSharedPointer<Room>::create(roomName, m_RMId, socket);
     m_rooms[roomName] = newroom;
-    //방에 자동으로 들어가기
-    qDebug()<<"ptr "<<newroom;
+
     joinRoom(roomName, socket);
     return true;
 }

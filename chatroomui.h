@@ -18,6 +18,9 @@ public:
 
     void addAllRoom();
 
+private slots:
+    void on_debugButton_clicked();
+
 private:
     Ui::ChatRoomUI *ui;
     QStandardItemModel* m_roomListView;

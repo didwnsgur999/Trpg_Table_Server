@@ -3,7 +3,6 @@
 #include <QListView>
 #include "roommanager.h"
 
-#define MAX 10
 ChatRoomUI::ChatRoomUI(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ChatRoomUI)
@@ -20,9 +19,16 @@ ChatRoomUI::~ChatRoomUI()
 
 void ChatRoomUI::addAllRoom() {
     auto vec = RoomManager::getInstance().getAllRoom();
+    m_roomListView->clear();
     for(auto i:vec){
-        QString text = QString("%1 || 인원 : %2)").arg(i->getRName(),i->getRCnt());
+        QString text = QString("%1 || 인원 : %2").arg(i->getRName(),QString::number(i->getRCnt()));
         QStandardItem* item = new QStandardItem(text);
         m_roomListView->appendRow(item);
     }
 }
+
+void ChatRoomUI::on_debugButton_clicked()
+{
+    ChatRoomUI::addAllRoom();
+}
+

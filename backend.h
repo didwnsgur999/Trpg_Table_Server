@@ -34,9 +34,10 @@ public:
     void setMaxCusId();
     void setMaxProId();
     void setMaxOrdId();
-    int getNewCusId() {return ++MAX_CID; }
-    int getNewProId() {return ++MAX_PID; }
-    int getNewOrdId() {return ++MAX_OID; }
+    //1000 3000 5000
+    int getNewCusId() {return MAX_CID++; }
+    int getNewProId() {return MAX_PID++; }
+    int getNewOrdId() {return MAX_OID++; }
 
     //QSharedPointer<Product>& searchProduct(int id);
     QSharedPointer<Customer> searchCustomerLogin(QString name, QString pwd);

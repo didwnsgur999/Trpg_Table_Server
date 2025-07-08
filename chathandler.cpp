@@ -53,9 +53,7 @@ void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
     qDebug() << "login sequence";
     QString name = obj["cName"].toString();
     QString pwd = obj["cPwd"].toString();
-    qDebug()<<"이름:"<< name<<pwd;
     auto customer = Backend::getInstance().searchCustomerLogin(name,pwd);
-    ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),name);
 
     //serveruser처리와 다시 보내기
     QJsonObject ret;
@@ -149,6 +147,7 @@ void ChatHandler::listRoomHandle(QTcpSocket *clientSocket, const QJsonObject &ob
         int cnt = i->getRCnt();
         roomobj["name"] = name;
         roomobj["cnt"] = cnt;
+        qDebug()<<name<<cnt;
     }
 
     ret["roomlist"] = roomobj;
@@ -161,7 +160,7 @@ void ChatHandler::addRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj
     //rName 받은거 처리
     qDebug() << "add room sequence";
     QString rName = obj["rName"].toString();
-
+    qDebug() << rName;
     //roommanager통해서 room 만들기 + 다시 보내줄 결과메시지생성
     QJsonObject ret;
     ret["cmd"] = "ret_add_r";
