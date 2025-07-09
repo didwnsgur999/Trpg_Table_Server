@@ -21,9 +21,9 @@ public:
 
     //CustomerTable 정렬 및 디스플레이;
     void loadCustomerTable(QStandardItemModel *table,
-                          std::function<bool(const QSharedPointer<Customer> &)> filter = nullptr);
-    std::function<bool(const QSharedPointer<Customer> &)> makeCustomerSearchFilter(
-        const QString &attribute, const QString &token);
+                            std::function<bool(const QSharedPointer<Customer> &)> filter = nullptr);
+                            std::function<bool(const QSharedPointer<Customer> &)> makeCustomerSearchFilter(
+                            const QString &attribute, const QString &token);
 private slots:
 
     void on_AddButton_clicked();

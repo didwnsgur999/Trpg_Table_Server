@@ -36,17 +36,17 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QToolBox" name="toolBox">
+     <widget class="QToolBox" name="PToolBox">
       <property name="currentIndex">
        <number>1</number>
       </property>
       <widget class="QWidget" name="ProductAdd">
        <property name="geometry">
         <rect>
-         <x>-1</x>
+         <x>0</x>
          <y>0</y>
-         <width>162</width>
-         <height>380</height>
+         <width>387</width>
+         <height>397</height>
         </rect>
        </property>
        <attribute name="label">
@@ -177,7 +177,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>161</width>
+         <width>387</width>
          <height>397</height>
         </rect>
        </property>

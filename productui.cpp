@@ -19,6 +19,7 @@ ProductUI::ProductUI(QWidget *parent)
     m_tableMain->setHorizontalHeaderLabels({tr("제품번호"), tr("제품명"), tr("가격"), tr("수량")});
     m_tableSearch = new QStandardItemModel(0, 4, this);
     m_tableSearch->setHorizontalHeaderLabels({tr("제품번호"), tr("제품명"), tr("가격"), tr("수량")});
+    ui->PToolBox->setCurrentIndex(0);
 }
 
 ProductUI::~ProductUI()

@@ -31,18 +31,18 @@
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
-     <widget class="QTableView" name="OTableView"/>
-     <widget class="QToolBox" name="toolBox">
+     <widget class="QTableView" name="MainTableView"/>
+     <widget class="QToolBox" name="OToolBox">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="OInput">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>297</width>
-         <height>542</height>
+         <width>158</width>
+         <height>554</height>
         </rect>
        </property>
        <attribute name="label">
@@ -140,7 +140,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>40</x>
@@ -168,8 +168,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>297</width>
-         <height>542</height>
+         <width>158</width>
+         <height>554</height>
         </rect>
        </property>
        <attribute name="label">
@@ -184,7 +184,28 @@
           <property name="orientation">
            <enum>Qt::Orientation::Horizontal</enum>
           </property>
-          <widget class="QComboBox" name="SearchComboBox"/>
+          <widget class="QComboBox" name="SearchComboBox">
+           <item>
+            <property name="text">
+             <string>oid</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pid</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cid</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pcnt</string>
+            </property>
+           </item>
+          </widget>
           <widget class="QLineEdit" name="SearchLineEdit"/>
          </widget>
         </item>

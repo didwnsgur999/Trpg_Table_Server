@@ -3,6 +3,7 @@
 #include "backend.h"
 #include "serveruser.h"
 #include <QBuffer>
+#include <QDateTime>
 ChatHandler::ChatHandler(QObject *parent)
     : QObject(parent)
 {}
@@ -93,6 +94,9 @@ void ChatHandler::chatHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
         emit sendMessage(clientSocket,doc);
     }else{
         QString sName = ServerUser::getInstance().SearchNameSocket(clientSocket);
+        //로그 찍는다.
+        QString log = QString("%1 - %2 : %3").arg(QDateTime::currentDateTime().toString("MM/dd hh:mm"),sName,text);
+        room->logMessage(log);
         for(auto socket:room->getRMember()){
             if(socket==clientSocket){
                 //본인은 그냥 보내기

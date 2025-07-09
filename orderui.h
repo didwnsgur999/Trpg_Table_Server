@@ -2,6 +2,8 @@
 #define ORDERUI_H
 
 #include <QWidget>
+#include <QStandardItemModel>
+#include "order.h"
 
 namespace Ui {
 class OrderUI;
@@ -15,8 +17,21 @@ public:
     explicit OrderUI(QWidget *parent = nullptr);
     ~OrderUI();
 
+    QStandardItemModel *getTableMain(){ return m_tableMain; }
+    void loadOrderTable(QStandardItemModel *table,
+                        std::function<bool(const QSharedPointer<Order> &)> filter = nullptr);
+                        std::function<bool(const QSharedPointer<Order> &)> makeOrderSearchFilter(
+                        const QString &attribute, const QString &token);
+
+private slots:
+    void on_DeleteButton_clicked();
+
+    void on_toolBox_currentChanged(int index);
+
 private:
     Ui::OrderUI *ui;
+    QStandardItemModel *m_tableMain;
+    QStandardItemModel *m_tableSearch;
 };
 
 #endif // ORDERUI_H
