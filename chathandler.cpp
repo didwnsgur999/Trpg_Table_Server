@@ -2,6 +2,7 @@
 #include "roommanager.h"
 #include "backend.h"
 #include "serveruser.h"
+#include <QBuffer>
 ChatHandler::ChatHandler(QObject *parent)
     : QObject(parent)
 {}
@@ -22,16 +23,22 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
     } else if (cmd == "chat") {
         // on the work - no debug
         ChatHandler::chatHandle(clientSocket, obj);
-    } else if (cmd == "add_p") {
+    } else if (cmd == "list_p"){
+        //on the work
+        ChatHandler::listProductHandle(clientSocket, obj);
+    }else if (cmd == "add_p") {
         ChatHandler::productAddHandle(clientSocket, obj);
-    } else if (cmd == "add_c") {
+    } else if (cmd == "list_c"){
         //on the work
+        ChatHandler::listCustomerHandle(clientSocket, obj);
+    }else if (cmd == "add_c") {
         ChatHandler::customerAddHandle(clientSocket, obj);
-    } else if (cmd == "add_o") {
+    }else if (cmd == "list_o"){
         //on the work
+        ChatHandler::listOrderHandle(clientSocket,obj);
+    }else if (cmd == "add_o") {
         ChatHandler::orderAddHandle(clientSocket, obj);
     } else if (cmd == "list_r") {
-        //on the work
         ChatHandler::listRoomHandle(clientSocket, obj);
     } else if (cmd == "add_r") {
         // on the work - no debug
@@ -81,7 +88,7 @@ void ChatHandler::chatHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
     ret["cmd"] = "ret_chat";
     if(room==nullptr){
         //본인한테 방에 없다고 알리기
-        ret["text"]="success";
+        ret["text"]="failed";
         QJsonDocument doc(ret);
         emit sendMessage(clientSocket,doc);
     }else{
@@ -140,17 +147,19 @@ void ChatHandler::listRoomHandle(QTcpSocket *clientSocket, const QJsonObject &ob
 
     QJsonObject ret;
     ret["cmd"] = "ret_list_r";
-    QJsonObject roomobj;
+    QJsonArray roomArray;
 
-    for(auto i:vec){
-        QString name = i->getRName();
-        int cnt = i->getRCnt();
+    for(const auto& room:vec){
+        QJsonObject roomobj;
+        QString name = room->getRName();
+        int cnt = room->getRCnt();
         roomobj["name"] = name;
         roomobj["cnt"] = cnt;
         qDebug()<<name<<cnt;
+        roomArray.append(roomobj);
     }
 
-    ret["roomlist"] = roomobj;
+    ret["roomlist"] = roomArray;
 
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
@@ -221,6 +230,85 @@ void ChatHandler::leaveRoomHandle(QTcpSocket *clientSocket, const QJsonObject &o
         ret["text"] = "failed";
     }
     //doc보내기
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
+}
+//===================
+//on the work
+//==================
+void ChatHandler::listProductHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    qDebug()<< "list product";
+    auto vec = Backend::getInstance().getProductList();
+    QJsonObject ret;
+    ret["cmd"] = "ret_list_p";
+    QJsonArray prodArray;
+
+    for(const auto& prod:vec){
+        QJsonObject prodobj;
+        int id = prod->getId();
+        QString name = prod->getName();
+        int price = prod->getPrice();
+        int cnt = prod->getCnt();
+        QPixmap pix = prod->getImage();
+        QByteArray byteArray;
+        QBuffer buffer(&byteArray);
+        buffer.open(QIODevice::WriteOnly);
+
+        // PNG 형식으로 QPixmap을 QByteArray로 저장
+        pix.save(&buffer, "PNG");
+        QString pixstr = QString::fromUtf8(byteArray.toBase64());
+        prodobj["pId"] = id;
+        prodobj["pName"] = name;
+        prodobj["pPrice"] = price;
+        prodobj["pCnt"] = cnt;
+        prodobj["pImage"] = pixstr;
+        qDebug()<<name<<cnt;
+        prodArray.append(prodobj);
+    }
+    //진행중
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
+}
+void ChatHandler::listOrderHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    qDebug()<< "list order";
+    auto vec = Backend::getInstance().getOrderList();
+    QJsonObject ret;
+    ret["cmd"] = "ret_list_o";
+    QJsonArray ordArray;
+
+    for(const auto& ord:vec){
+        QJsonObject ordobj;
+        int id = ord->getId();
+        int pid = ord->getPID();
+        int cid = ord->getCID();
+        int cnt = ord->getCnt();
+        ordobj["id"] = id;
+        ordobj["cid"] = pid;
+        ordobj["pid"] = cid;
+        ordobj["cnt"] = cnt;
+        qDebug()<<id<<pid;
+        ordArray.append(ordobj);
+    }
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
+}
+void ChatHandler::listCustomerHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    qDebug()<< "list customer";
+    auto vec = Backend::getInstance().getCustomerList();
+    QJsonObject ret;
+    ret["cmd"] = "ret_list_c";
+    QJsonArray cusArray;
+
+    for(const auto& cus:vec){
+        QJsonObject cusobj;
+        QString name = cus->getName();
+        int id = cus->getId();
+        cusobj["name"] = name;
+        cusobj["id"] = id;
+        qDebug()<<name<<id;
+        cusArray.append(cusobj);
+    }
+
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
 }
