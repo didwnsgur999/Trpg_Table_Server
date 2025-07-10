@@ -34,14 +34,14 @@
      <widget class="QTableView" name="MainTableView"/>
      <widget class="QToolBox" name="OToolBox">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="OInput">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>158</width>
+         <width>381</width>
          <height>554</height>
         </rect>
        </property>
@@ -136,7 +136,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="ProductCLineEdit_3"/>
+          <widget class="QLineEdit" name="ProductCntLineEdit"/>
          </item>
         </layout>
        </widget>
@@ -168,7 +168,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>158</width>
+         <width>381</width>
          <height>554</height>
         </rect>
        </property>

@@ -24,6 +24,7 @@ bool ServerUser::ChangeUserId(QTcpSocket *userSocket, int userId, QString userNa
 
     return true;
 }
+//유저 접속 종료시 방에서 처리할 것 처리하고 나가야됨. 나중에 변경
 //유저 접속 종료시 불러올거임.
 bool ServerUser::RemoveUser(QTcpSocket *userSocket)
 {
@@ -35,10 +36,9 @@ bool ServerUser::RemoveUser(QTcpSocket *userSocket)
     m_curuser.remove(userSocket);
     return true;
 }
-//진행중
-//===============================================================
 
 //순방향 역방향 다 탐색가능. 없으면 nullptr or -1 or nullString
+//함수에 적힌 앞의 값을 뒤를 통해 찾아온다.
 int ServerUser::SearchIdSocket(QTcpSocket *userSocket)
 {
     return m_curuser.value(userSocket,-1);

@@ -39,8 +39,9 @@ public:
     int getNewProId() {return MAX_PID++; }
     int getNewOrdId() {return MAX_OID++; }
 
-    //QSharedPointer<Product>& searchProduct(int id);
+    QSharedPointer<Product> searchProductName(QString name);
     QSharedPointer<Customer> searchCustomerLogin(QString name, QString pwd);
+    QSharedPointer<Customer> searchCustomerId(int cid);
     //QSharedPointer<Order>& searchOrder(int id);
 
     //getProduct,customer,orderlist

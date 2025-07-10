@@ -42,9 +42,9 @@ void OrderUI::loadOrderTable(QStandardItemModel *table,
             continue;
         table->insertRow(row);
         table->setItem(row, 0, new QStandardItem(QString::number(cur->getId())));
-        table->setItem(row, 1, new QStandardItem(cur->getPID()));
-        table->setItem(row, 2, new QStandardItem(cur->getCID()));
-        table->setItem(row, 3, new QStandardItem(cur->getCnt()));
+        table->setItem(row, 1, new QStandardItem(QString::number(cur->getPID())));
+        table->setItem(row, 2, new QStandardItem(QString::number(cur->getCID())));
+        table->setItem(row, 3, new QStandardItem(QString::number(cur->getCnt())));
         row++;
     }
     if (table == m_tableMain)
@@ -70,10 +70,21 @@ std::function<bool(const QSharedPointer<Order> &)> OrderUI::makeOrderSearchFilte
     };
 }
 
-void OrderUI::on_toolBox_currentChanged(int index)
+void OrderUI::on_OToolBox_currentChanged(int index)
 {
     if (index == 1) {
         loadOrderTable(m_tableSearch);
     }
+}
+
+void OrderUI::on_AddButton_clicked()
+{
+    QSharedPointer<Order> newOrder = QSharedPointer<Order>::create();
+    newOrder->setId(ui->IDLineEdit->text().toInt());
+    newOrder->setPID(ui->ProductLineEdit->text().toInt());
+    newOrder->setCID(ui->CustomerLineEdit->text().toInt());
+    newOrder->setCnt(ui->ProductCntLineEdit->text().toInt());
+    Backend::getInstance().addOrder(newOrder);
+    loadOrderTable(m_tableMain);
 }
 

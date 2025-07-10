@@ -26,7 +26,9 @@ public:
 private slots:
     void on_DeleteButton_clicked();
 
-    void on_toolBox_currentChanged(int index);
+    void on_OToolBox_currentChanged(int index);
+
+    void on_AddButton_clicked();
 
 private:
     Ui::OrderUI *ui;

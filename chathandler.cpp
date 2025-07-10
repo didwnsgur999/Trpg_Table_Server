@@ -142,8 +142,37 @@ void ChatHandler::productAddHandle(QTcpSocket *clientSocket, const QJsonObject &
 }
 void ChatHandler::orderAddHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     qDebug() << "append order sequence";
-    auto neworder = Order::fromJson(obj);
-    Backend::getInstance().addOrder(neworder);
+    //제품을 샀음 -> customer에 제품 넣고, 제품 갯수 낮추고, 안되면 안된다고 보내야됨.
+    int cid = ServerUser::getInstance().SearchIdSocket(clientSocket);
+    QString pname = obj["pname"].toString();
+    int pcnt = obj["pcnt"].toInt();
+
+    //제품 찾기, 찾았으면 customer의 장바구니에 들어가야하고, 갯수 낮추고 order만든다.
+    //room쪽
+    int flag=0;
+    auto prod = Backend::getInstance().searchProductName(pname);
+    auto cus = Backend::getInstance().searchCustomerId(cid);
+    if(prod!=nullptr&&prod->getCnt()>=pcnt){
+        if(cus!=nullptr){
+            //살수있다.
+            flag = 1;
+
+        }
+    }
+
+    //Backend::getInstance().addOrder(neworder);
+
+    QJsonObject ret;
+    ret["cmd"] = "ret_add_o";
+    if(flag){
+        //여기서 사야됨.
+        //Backend::getInstance().addOrder();
+        //ret[text]="success";
+    } else {
+        //ret[text]="failed";
+    }
+
+
 }
 void ChatHandler::listRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     qDebug()<<"list room sequence";
@@ -213,6 +242,7 @@ void ChatHandler::joinRoomHandle(QTcpSocket *clientSocket, const QJsonObject &ob
     ret["cmd"] = "ret_join_r";
     if(RoomManager::getInstance().joinRoom(rName,clientSocket)){
         ret["text"] = "success";
+        ret["rName"] = rName;
     } else {
         ret["text"] = "failed";
     }
@@ -220,7 +250,7 @@ void ChatHandler::joinRoomHandle(QTcpSocket *clientSocket, const QJsonObject &ob
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
 }
-//방 나가기
+//방 나가기 - 추가
 void ChatHandler::leaveRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
 {
     qDebug() << "leave room sequence";

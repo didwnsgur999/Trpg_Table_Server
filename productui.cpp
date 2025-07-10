@@ -74,7 +74,7 @@ void ProductUI::loadProductTable(QStandardItemModel *table,
 }
 
 //search 탭에서 사용하는 함수들
-void ProductUI::on_toolBox_currentChanged(int index)
+void ProductUI::on_PToolBox_currentChanged(int index)
 {
     if (index == 1) {
         loadProductTable(m_tableSearch);
