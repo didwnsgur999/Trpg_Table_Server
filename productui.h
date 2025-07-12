@@ -36,7 +36,7 @@ public:
 private slots:
     void on_AddButton_clicked();
 
-    void on_toolBox_currentChanged(int index);
+    void on_PToolBox_currentChanged(int index);
 
     void on_SearchButton_clicked();
 

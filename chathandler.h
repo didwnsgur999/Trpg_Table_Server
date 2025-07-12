@@ -30,6 +30,9 @@ private:
     void deleteRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void joinRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void leaveRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
+    void listProductHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
+    void listOrderHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
+    void listCustomerHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     //채팅방 로그 관련 시퀀스
 signals:
     void sendMessage(QTcpSocket* clientSocket,const QJsonDocument &doc);

@@ -18,6 +18,10 @@ public:
     int getCID() const { return m_CID; }
     int getPID() const { return m_PID; }
     int getCnt() const { return m_cnt; }
+    void setId(int id) {m_id = id;}
+    void setCID(int cid) {m_CID = cid;}
+    void setPID(int pid) {m_PID = pid;}
+    void setCnt(int pcnt) {m_cnt = pcnt;}
 
 private:
     //주문명, 고객ID, 제품ID, 갯수

@@ -55,14 +55,14 @@ void MainWindow::on_MainTabWidget_currentChanged(int index)
         break;
     case 2:
         //m_orderUI
-
+        m_orderUI->loadOrderTable(m_orderUI->getTableMain());
         break;
     case 3:
         //m_ChatRoomUI
         m_chatRoomUI->addAllRoom();
         break;
     case 4:
-
+        //debug
         break;
     }
 

@@ -13,6 +13,7 @@ CustomerUI::CustomerUI(QWidget *parent)
     m_tableMain->setHorizontalHeaderLabels({tr("고객번호"), tr("고객명"), tr("고객PWD")});
     m_tableSearch = new QStandardItemModel(0, 3, this);
     m_tableSearch->setHorizontalHeaderLabels({tr("고객번호"), tr("고객명"), tr("고객PWD")});
+    ui->CToolBox->setCurrentIndex(0);
 }
 
 CustomerUI::~CustomerUI()
