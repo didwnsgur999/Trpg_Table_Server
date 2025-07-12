@@ -19,6 +19,7 @@ SOURCES += \
     logworker.cpp \
     main.cpp \
     mainwindow.cpp \
+    mygraphicsview.cpp \
     order.cpp \
     orderui.cpp \
     product.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     debugui.h \
     logworker.h \
     mainwindow.h \
+    mygraphicsview.h \
     order.h \
     orderui.h \
     product.h \
