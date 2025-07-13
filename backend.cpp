@@ -69,14 +69,6 @@ QSharedPointer<Customer> Backend::searchCustomerLogin(QString name, QString pwd)
     }
     return nullptr;
 }
-QSharedPointer<Product> Backend::searchProductName(QString pname){
-    for(int i=0; i<productList.size();i++){
-        if(productList[i]->getName()==pname){
-            return productList[i];
-        }
-    }
-    return nullptr;
-}
 QSharedPointer<Customer> Backend::searchCustomerId(int cid){
     for(int i=0; i<customerList.size();i++){
         if(customerList[i]->getId()==cid){
