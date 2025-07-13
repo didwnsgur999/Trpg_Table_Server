@@ -1,4 +1,5 @@
 #include "order.h"
+#include "backend.h"
 
 Order::Order() {}
 
@@ -8,6 +9,13 @@ Order::Order(int id, int cid, int pid, int pcnt)
     , m_PID(pid)
     , m_cnt(pcnt)
 {}
+Order::Order(int cid, int pid, int pcnt)
+    : m_CID(cid)
+    , m_PID(pid)
+    , m_cnt(pcnt)
+{
+    m_id = Backend::getInstance().getNewOrdId();
+}
 
 QJsonObject Order::toJson() const
 {

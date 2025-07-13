@@ -50,7 +50,7 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
     } else if (cmd == "join_r"){
         // on the work - no debug
         ChatHandler::joinRoomHandle(clientSocket, obj);
-    } else if (cmd == "remove_r"){
+    } else if (cmd == "leave_r"){
         // on the work - no debug
         ChatHandler::leaveRoomHandle(clientSocket, obj);
     }
@@ -146,6 +146,7 @@ void ChatHandler::orderAddHandle(QTcpSocket *clientSocket, const QJsonObject &ob
     int cid = ServerUser::getInstance().SearchIdSocket(clientSocket);
     QString pname = obj["pname"].toString();
     int pcnt = obj["pcnt"].toInt();
+    qDebug()<<pname<<pcnt;
 
     //제품 찾기, 찾았으면 customer의 장바구니에 들어가야하고, 갯수 낮추고 order만든다.
     //room쪽
@@ -153,26 +154,30 @@ void ChatHandler::orderAddHandle(QTcpSocket *clientSocket, const QJsonObject &ob
     auto prod = Backend::getInstance().searchProductName(pname);
     auto cus = Backend::getInstance().searchCustomerId(cid);
     if(prod!=nullptr&&prod->getCnt()>=pcnt){
+        qDebug()<<"prod:"<<prod;
         if(cus!=nullptr){
+            qDebug()<<"cus:"<<cus;
             //살수있다.
             flag = 1;
-
         }
     }
-
-    //Backend::getInstance().addOrder(neworder);
-
+    qDebug()<<"flag:"<<flag;
     QJsonObject ret;
     ret["cmd"] = "ret_add_o";
     if(flag){
-        //여기서 사야됨.
-        //Backend::getInstance().addOrder();
-        //ret[text]="success";
+        //order추가, prod갯수 줄이기, customer에 prodid추가
+        auto neworder = QSharedPointer<Order>::create(cid,prod->getId(),pcnt);
+        qDebug()<<neworder->getId();
+        prod->setCnt(prod->getCnt()-pcnt);
+        cus->addprod(prod->getName(),prod->getId());
+        Backend::getInstance().addOrder(neworder);
+        ret["text"]="success";
     } else {
-        //ret[text]="failed";
+        ret["text"]="failed";
     }
 
-
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
 }
 void ChatHandler::listRoomHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     qDebug()<<"list room sequence";
@@ -299,6 +304,7 @@ void ChatHandler::listProductHandle(QTcpSocket *clientSocket, const QJsonObject 
         qDebug()<<name<<cnt;
         prodArray.append(prodobj);
     }
+    ret["productlist"]=prodArray;
     //진행중
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);

@@ -35,9 +35,9 @@ public:
     void setMaxProId();
     void setMaxOrdId();
     //1000 3000 5000
-    int getNewCusId() {return MAX_CID++; }
-    int getNewProId() {return MAX_PID++; }
-    int getNewOrdId() {return MAX_OID++; }
+    int getNewCusId() {return ++MAX_CID; }
+    int getNewProId() {return ++MAX_PID; }
+    int getNewOrdId() {return ++MAX_OID; }
 
     //QSharedPointer<Product> searchProduct(int id);
     QSharedPointer<Product> searchProductName(QString Name);

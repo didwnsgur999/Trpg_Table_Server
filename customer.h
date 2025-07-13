@@ -25,6 +25,7 @@ public:
     void setName(QString name) { m_name=name;}
     QString getPwd() const { return m_pwd; }
     void setPwd(QString pwd) { m_pwd=pwd;}
+    void addprod(QString pname,int pid){ m_myProduct.insert(pname,pid);}
 
     QHash<QString, int> &getProduct() { return m_myProduct; }
 

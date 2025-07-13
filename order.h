@@ -9,6 +9,7 @@ class Order
 public:
     Order();
     Order(int id, int cid, int pid, int pcnt);
+    Order(int cid, int pid, int pcnt);
     //Product를 Json으로 변경하는 함수
     QJsonObject toJson() const;
     //Json을 Product로 변경하는 함수.
