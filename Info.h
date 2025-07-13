@@ -5,7 +5,6 @@ class Info
 {
 public:
     Info();
-
 };
 
 #endif // INFO_H

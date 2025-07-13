@@ -2,9 +2,12 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <memory.h>
 #include "customerui.h"
 #include "productui.h"
+#include "orderui.h"
+#include "chatroomui.h"
+#include "debugui.h"
+#include <memory.h>
 
 class Backend;
 class ServerChat;
@@ -28,7 +31,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    CustomerUI* m_customerUI;
-    ProductUI* m_productUI;
+    CustomerUI *m_customerUI;
+    ProductUI *m_productUI;
+    OrderUI *m_orderUI;
+    ChatRoomUI *m_chatRoomUI;
+    DebugUI *m_debugUI;
 };
 #endif // MAINWINDOW_H

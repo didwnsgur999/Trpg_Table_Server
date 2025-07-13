@@ -10,15 +10,19 @@ CONFIG += c++17
 
 SOURCES += \
     Info.cpp \
-    Product.cpp \
     backend.cpp \
     chathandler.cpp \
+    chatroomui.cpp \
     customer.cpp \
     customerui.cpp \
+    debugui.cpp \
     logworker.cpp \
     main.cpp \
     mainwindow.cpp \
+    mygraphicsview.cpp \
     order.cpp \
+    orderui.cpp \
+    product.cpp \
     productui.cpp \
     room.cpp \
     roommanager.cpp \
@@ -27,14 +31,18 @@ SOURCES += \
 
 HEADERS += \
     Info.h \
-    Product.h \
     backend.h \
     chathandler.h \
+    chatroomui.h \
     customer.h \
     customerui.h \
+    debugui.h \
     logworker.h \
     mainwindow.h \
+    mygraphicsview.h \
     order.h \
+    orderui.h \
+    product.h \
     productui.h \
     room.h \
     roommanager.h \
@@ -42,8 +50,11 @@ HEADERS += \
     serveruser.h
 
 FORMS += \
+    chatroomui.ui \
     customerui.ui \
+    debugui.ui \
     mainwindow.ui \
+    orderui.ui \
     productui.ui
 
 TRANSLATIONS += \

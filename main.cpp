@@ -1,8 +1,8 @@
-#include "backend.h"
-#include "mainwindow.h"
+#include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <QApplication>
+#include "backend.h"
+#include "mainwindow.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -17,11 +17,14 @@ int main(int argc, char *argv[])
         }
     }
     Backend::getInstance().loadProductJson("products.json");
-    Backend::getInstance().loadCustomerJson("customer.json");
-    Backend::getInstance().loadOrderJson("order.json");
-    Backend::getInstance().ShowProductList();
-    Backend::getInstance().ShowCustomerList();
-    Backend::getInstance().ShowOrderList();
+    Backend::getInstance().loadCustomerJson("customers.json");
+    Backend::getInstance().loadOrderJson("orders.json");
+    Backend::getInstance().setMaxCusId();
+    Backend::getInstance().setMaxProId();
+    Backend::getInstance().setMaxOrdId();
+    // Backend::getInstance().ShowProductList();
+    // Backend::getInstance().ShowCustomerList();
+    // Backend::getInstance().ShowOrderList();
     MainWindow w;
     w.show();
     return a.exec();
