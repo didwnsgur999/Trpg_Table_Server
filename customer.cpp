@@ -42,16 +42,15 @@ QSharedPointer<Customer> Customer::fromJson(const QJsonObject &obj)
 QSharedPointer<Customer> Customer::fromJsonEXID(const QJsonObject &obj)
 {
     int id = Backend::getInstance().getNewCusId();
-    QString name = obj["name"].toString();
-    QString pwd = obj["pwd"].toString();
+    QString name = obj["cName"].toString();
+    QString pwd = obj["cPwd"].toString();
 
     auto customer = QSharedPointer<Customer>::create(id, name, pwd);
-
-    if (obj.contains("myproduct") && obj["myproduct"].isObject()) {
-        QJsonObject productObj = obj["myproduct"].toObject();
-        for (auto it = productObj.begin(); it != productObj.end(); ++it) {
-            customer->getProduct()[it.key()] = it.value().toInt();
-        }
-    }
+    // if (obj.contains("myproduct") && obj["myproduct"].isObject()) {
+    //     QJsonObject productObj = obj["myproduct"].toObject();
+    //     for (auto it = productObj.begin(); it != productObj.end(); ++it) {
+    //         customer->getProduct()[it.key()] = it.value().toInt();
+    //     }
+    // }
     return customer;
 }

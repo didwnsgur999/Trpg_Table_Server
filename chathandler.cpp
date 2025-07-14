@@ -70,7 +70,9 @@ void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
         ret["text"] = "failed";
     }else{
         ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),customer->getName());
+        QJsonObject cus = customer->toJson();
         ret["text"] = "success";
+        ret["cus"] = cus;
     }
 
     QJsonDocument doc(ret);
@@ -118,15 +120,16 @@ void ChatHandler::customerAddHandle(QTcpSocket *clientSocket, const QJsonObject 
     QString name = obj["cName"].toString();
     QString pwd = obj["cPwd"].toString();
     auto customer = Backend::getInstance().searchCustomerLogin(name,pwd);
-
     QJsonObject ret;
     ret["cmd"] = "ret_add_c";
     if(customer==nullptr){
         auto newcustomer = Customer::fromJsonEXID(obj);
         //backend에 저장.
         Backend::getInstance().addCustomer(newcustomer);
-        ServerUser::getInstance().ChangeUserId(clientSocket,customer->getId(),customer->getName());
+        ServerUser::getInstance().ChangeUserId(clientSocket,newcustomer->getId(),newcustomer->getName());
+        QJsonObject cus = newcustomer->toJson();
         ret["text"] = "success";
+        ret["cus"] = cus;
     }else{
         ret["text"] = "failed";
     }
