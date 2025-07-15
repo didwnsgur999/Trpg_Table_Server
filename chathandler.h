@@ -33,6 +33,8 @@ private:
     void listProductHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void listOrderHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void listCustomerHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
+    //방 아이템 추가 및 처리 시퀀스
+    void addRoomImageHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     //채팅방 로그 관련 시퀀스
 signals:
     void sendMessage(QTcpSocket* clientSocket,const QJsonDocument &doc);

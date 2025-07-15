@@ -53,6 +53,8 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
     } else if (cmd == "leave_r"){
         // on the work - no debug
         ChatHandler::leaveRoomHandle(clientSocket, obj);
+    } else if (cmd == "add_r_image"){
+        ChatHandler::addRoomImageHandle(clientSocket, obj);
     }
 }
 void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
@@ -354,4 +356,12 @@ void ChatHandler::listCustomerHandle(QTcpSocket *clientSocket, const QJsonObject
 
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
+}
+//===================//
+//here
+//===================//
+void ChatHandler::addRoomImageHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    //특정 방에 뭐 추가하라고 준거잖음? 그럼 방 이름도 줘야지?
+
+
 }

@@ -3,7 +3,7 @@
 
 LogWorker::LogWorker(const QString &roomName, QObject *parent)
     : QThread(parent)
-    , m_logFileName(QDateTime::currentDateTime().toString("MMDD_HHMMSS_")+roomName + ".log")
+    , m_logFileName(QDateTime::currentDateTime().toString("MMdd_HHMMss_")+roomName + ".log")
     , m_running(true)
 {}
 //mutex 가지고 있어야지만 logworker의 동작 변경 가능.
