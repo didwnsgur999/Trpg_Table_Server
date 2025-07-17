@@ -35,7 +35,7 @@ void ProductUI::on_AddButton_clicked()
     newProduct->setId(ui->PIDLineEdit->text().toInt());
     newProduct->setName(ui->NameLineEdit->text());
     newProduct->setPrice(ui->PriceLineEdit->text().toInt());
-    newProduct->setCnt(ui->PIDLineEdit->text().toInt());
+    newProduct->setCnt(ui->CntLineEdit->text().toInt());
     newProduct->setImage(m_selectedImage);
     Backend::getInstance().addProduct(newProduct);
     loadProductTable(m_tableMain);
