@@ -45,6 +45,7 @@ HEADERS += \
     product.h \
     productui.h \
     room.h \
+    roomitem.h \
     roommanager.h \
     serverchat.h \
     serveruser.h

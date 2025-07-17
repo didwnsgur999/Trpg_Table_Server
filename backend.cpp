@@ -52,6 +52,15 @@ const QVector<QSharedPointer<Order>> &Backend::getOrderList() const
 {
     return orderList;
 }
+QSharedPointer<Product> Backend::searchProductId(int Id){
+    for(int i=0; i<productList.size(); i++){
+        if(productList[i]->getId()==Id){
+            return productList[i];
+        }
+    }
+    return nullptr;
+}
+
 QSharedPointer<Product> Backend::searchProductName(QString Name){
     for(int i=0; i<productList.size(); i++){
         if(productList[i]->getName()==Name){

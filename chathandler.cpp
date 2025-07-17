@@ -2,6 +2,7 @@
 #include "roommanager.h"
 #include "backend.h"
 #include "serveruser.h"
+#include "roomitem.h"
 #include <QBuffer>
 #include <QDateTime>
 ChatHandler::ChatHandler(QObject *parent)
@@ -53,8 +54,12 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
     } else if (cmd == "leave_r"){
         // on the work - no debug
         ChatHandler::leaveRoomHandle(clientSocket, obj);
-    } else if (cmd == "add_r_image"){
-        ChatHandler::addRoomImageHandle(clientSocket, obj);
+    } else if (cmd == "add_r_item"){
+        ChatHandler::addRoomItemHandle(clientSocket, obj);
+    } else if (cmd == "del_r_item"){
+        ChatHandler::deleteRoomItemHandle(clientSocket, obj);
+    } else if (cmd == "mov_r_item"){
+        ChatHandler::movRoomItemHandle(clientSocket,obj);
     }
 }
 void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
@@ -360,8 +365,104 @@ void ChatHandler::listCustomerHandle(QTcpSocket *clientSocket, const QJsonObject
 //===================//
 //here
 //===================//
-void ChatHandler::addRoomImageHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+void ChatHandler::addRoomItemHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     //특정 방에 뭐 추가하라고 준거잖음? 그럼 방 이름도 줘야지?
+    qDebug()<<"add room item";
+    //제품 id랑 rName 받았다.
+    int pid = obj["pid"].toInt();
+    QString rName = obj["rName"].toString();
 
+    auto product = Backend::getInstance().searchProductId(pid);
+    auto room = RoomManager::getInstance().getRoom(rName);
 
+    QJsonObject ret;
+    ret["cmd"] = "ret_add_r_item";
+    if(product!=nullptr && room!=nullptr){
+        qDebug()<<"success";
+        //둘다 포인터가 돌아왔으면 방에 추가하고 모든 room 사람들한테 알려야됨.
+        auto item = room->addRoomItem(pid,product->getName());
+        //룸 아이템 json으로 보내줘야됨.
+        ret["text"]="success";
+        ret["item"]=item.toJson();
+        qDebug()<<"emit: "<<item.pid;
+        for(auto socket:room->getRMember()){
+            QJsonDocument doc(ret);
+            emit sendMessage(socket,doc);
+        }
+    } else {
+        qDebug()<<"failure";
+        ret["text"]="failure";
+        QJsonDocument doc(ret);
+        emit sendMessage(clientSocket,doc);
+    }
+}
+void ChatHandler::deleteRoomItemHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    qDebug()<<"del room item";
+    //제품 id랑 rName + 좌표받았다.
+    int iid = obj["iid"].toInt();
+    QString rName = obj["rName"].toString();
+
+    auto room = RoomManager::getInstance().getRoom(rName);
+    qDebug()<<iid;
+    QJsonObject ret;
+    ret["cmd"]="ret_del_r_item";
+    if(room!=nullptr){ //방 있음
+        //지워짐.
+        if(room->delRoomItem(iid)){
+            qDebug()<<"delete item success";
+            ret["text"]="success";
+            ret["iid"]=iid;
+            //방 전원한테 지우라고 broadcast 해야됨.
+            for(auto socket:room->getRMember()){
+                QJsonDocument doc(ret);
+                emit sendMessage(socket,doc);
+            }
+        } else { //안 지워짐
+            ret["text"]="failure no item in the room";
+            QJsonDocument doc(ret);
+            emit sendMessage(clientSocket,doc);
+        }
+    } else { //방 자체가 없음
+        qDebug()<<"failure";
+        //방 없음 지워짐.
+        ret["text"]="failure by room erased";
+        QJsonDocument doc(ret);
+        emit sendMessage(clientSocket,doc);
+    }
+}
+void ChatHandler::movRoomItemHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    qDebug()<<"server: moveRoom handler called";
+    int iid = obj["iid"].toInt();
+    int newx = obj["newx"].toInt();
+    int newy = obj["newy"].toInt();
+    int z = obj["z"].toInt();
+    QString rName = obj["rName"].toString();
+
+    auto room = RoomManager::getInstance().getRoom(rName);
+    qDebug()<<iid;
+    QJsonObject ret;
+    ret["cmd"]="ret_mov_r_item";
+    //아래 서버 mov item 코드
+    if(room!=nullptr){
+        int finx=0,finy=0,finz=0;
+        if(room->movRoomItem(iid,newx,newy,z,&finx,&finy,&finz)){
+            ret["text"]="success";
+            ret["iid"]=iid;
+            ret["finx"]=finx;
+            ret["finy"]=finy;
+            ret["finz"]=finz;
+            for(auto socket:room->getRMember()){
+                QJsonDocument doc(ret);
+                emit sendMessage(socket,doc);
+            }
+        }else{
+            ret["text"]="failed";
+            QJsonDocument doc(ret);
+            emit sendMessage(clientSocket,doc);
+        }
+    }else {
+        ret["text"]="failed";
+        QJsonDocument doc(ret);
+        emit sendMessage(clientSocket,doc);
+    }
 }

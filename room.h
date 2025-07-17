@@ -4,6 +4,7 @@
 #include <QString>
 #include <QTcpSocket>
 #include "logworker.h"
+#include "roomitem.h"
 class Room
 {
 public:
@@ -19,6 +20,13 @@ public:
     int getRMId() const {return m_RMId;}
     const QHash<int, QTcpSocket *> &getRMember() const {return m_rMember;}
     int getRCnt() const {return m_rCnt;}
+    //int getItem() const {return }
+    //room item 추가제거
+    RoomItem addRoomItem(int pId, QString pName);
+    bool delRoomItem(int iid);
+    bool movRoomItem(int iid,int x,int y,int z,int* finx,int *finy,int *finz);
+    //충돌 방어용.
+    bool searchColXYItem(int &x, int &y);
 
     //로그 메시지 저장.
     void logMessage(const QString &msg);
@@ -30,6 +38,9 @@ private:
     int m_RMId;
     QHash<int, QTcpSocket *> m_rMember;
     int m_rCnt;
+    //룸 오브젝트
+    QList<RoomItem> m_item;
+    int Max_iid;
     //로그용 로그 찍는 class
     LogWorker *m_logworker;
 };
