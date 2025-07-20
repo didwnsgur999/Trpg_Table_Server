@@ -5,10 +5,13 @@ Room::Room(QString rName, int RMId, QTcpSocket *Socket)
     , m_RMId(RMId)
 {
     Max_iid=0;
-    m_rMember[RMId] = Socket;
+    m_rCnt=0;
+
     m_logworker = new LogWorker(rName);
     m_logworker->start();
-    addMem(RMId,Socket);
+    //아래는 join안한다는 가정하에 하는거고.
+    //m_rMember[RMId] = Socket;
+    //addMem(RMId,Socket);
 }
 
 Room::~Room()
