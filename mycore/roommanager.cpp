@@ -63,11 +63,13 @@ bool RoomManager::leaveRoom(const QString &roomName,QTcpSocket *socket){
     if(!m_rooms.contains(roomName)){
         return false;
     }
+    qDebug()<<"leave room seq";
     auto room = m_rooms.value(roomName);
     //방있고, 사람 있으면
     //방 나가야됨
     //룸에서 나가는 처리
     room->deleteMem(userId);
+    qDebug()<<room->getRCnt();
     return true;
 }
 

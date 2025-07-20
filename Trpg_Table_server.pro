@@ -9,54 +9,54 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Info.cpp \
-    backend.cpp \
-    chathandler.cpp \
-    chatroomui.cpp \
-    customer.cpp \
-    customerui.cpp \
-    debugui.cpp \
-    logworker.cpp \
-    main.cpp \
-    mainwindow.cpp \
-    mygraphicsview.cpp \
-    order.cpp \
-    orderui.cpp \
-    product.cpp \
-    productui.cpp \
-    room.cpp \
-    roommanager.cpp \
-    serverchat.cpp \
-    serveruser.cpp
+    mycore/Info.cpp \
+    mycore/backend.cpp \
+    mycore/chathandler.cpp \
+    ui/chatroomui.cpp \
+    mycore/customer.cpp \
+    ui/customerui.cpp \
+    ui/debugui.cpp \
+    mycore/logworker.cpp \
+    mycore/main.cpp \
+    ui/mainwindow.cpp \
+    graphics/mygraphicsview.cpp \
+    mycore/order.cpp \
+    ui/orderui.cpp \
+    mycore/product.cpp \
+    ui/productui.cpp \
+    mycore/room.cpp \
+    mycore/roommanager.cpp \
+    mycore/serverchat.cpp \
+    mycore/serveruser.cpp
 
 HEADERS += \
-    Info.h \
-    backend.h \
-    chathandler.h \
-    chatroomui.h \
-    customer.h \
-    customerui.h \
-    debugui.h \
-    logworker.h \
-    mainwindow.h \
-    mygraphicsview.h \
-    order.h \
-    orderui.h \
-    product.h \
-    productui.h \
-    room.h \
-    roomitem.h \
-    roommanager.h \
-    serverchat.h \
-    serveruser.h
+    mycore/Info.h \
+    mycore/backend.h \
+    mycore/chathandler.h \
+    ui/chatroomui.h \
+    mycore/customer.h \
+    ui/customerui.h \
+    ui/debugui.h \
+    mycore/logworker.h \
+    ui/mainwindow.h \
+    graphics/mygraphicsview.h \
+    mycore/order.h \
+    ui/orderui.h \
+    mycore/product.h \
+    ui/productui.h \
+    mycore/room.h \
+    mycore/roomitem.h \
+    mycore/roommanager.h \
+    mycore/serverchat.h \
+    mycore/serveruser.h
 
 FORMS += \
-    chatroomui.ui \
-    customerui.ui \
-    debugui.ui \
-    mainwindow.ui \
-    orderui.ui \
-    productui.ui
+    ui/chatroomui.ui \
+    ui/customerui.ui \
+    ui/debugui.ui \
+    ui/mainwindow.ui \
+    ui/orderui.ui \
+    ui/productui.ui
 
 TRANSLATIONS += \
     Trpg_Table_ko_KR.ts

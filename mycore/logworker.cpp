@@ -1,11 +1,18 @@
 #include "logworker.h"
 #include <QDateTime>
+#include <QDir>
 
 LogWorker::LogWorker(const QString &roomName, QObject *parent)
     : QThread(parent)
-    , m_logFileName(QDateTime::currentDateTime().toString("MMdd_HHMMss_")+roomName + ".log")
     , m_running(true)
-{}
+{
+    QString logDirPath = QDir::currentPath() + "/logs";
+    QDir dir;
+    if(!dir.exists(logDirPath)){
+        dir.mkpath(logDirPath);
+    }
+    m_logFileName = logDirPath+"/"+QDateTime::currentDateTime().toString("MMdd_HHMMss_")+roomName + ".log";
+}
 //mutex 가지고 있어야지만 logworker의 동작 변경 가능.
 void LogWorker::enqueueLog(const QString &logLine)
 {

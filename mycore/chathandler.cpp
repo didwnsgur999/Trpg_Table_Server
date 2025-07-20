@@ -275,6 +275,9 @@ void ChatHandler::leaveRoomHandle(QTcpSocket *clientSocket, const QJsonObject &o
     ret["cmd"] = "ret_leave_r";
     if(RoomManager::getInstance().leaveRoom(rName,clientSocket)){
         ret["text"] = "success";
+        if(RoomManager::getInstance().getRoom(rName)->getRCnt()==0){
+            RoomManager::getInstance().deleteRoom(rName);
+        }
     } else {
         ret["text"] = "failed";
     }
