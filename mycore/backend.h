@@ -43,7 +43,7 @@ public:
     QSharedPointer<Product> searchProductName(QString Name);
     QSharedPointer<Customer> searchCustomerLogin(QString name, QString pwd);
     QSharedPointer<Customer> searchCustomerId(int cid);
-    //QSharedPointer<Order> searchOrder(int id);
+    QSharedPointer<Order> searchOrderId(int id);
 
     //getProduct,customer,orderlist
     const QVector<QSharedPointer<Product>> &getProductList() const;

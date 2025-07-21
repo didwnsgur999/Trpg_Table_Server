@@ -86,6 +86,16 @@ QSharedPointer<Customer> Backend::searchCustomerId(int cid){
     }
     return nullptr;
 }
+QSharedPointer<Order> Backend::searchOrderId(int Id){
+    for(int i=0; i<orderList.size(); i++){
+        if(orderList[i]->getId()==Id){
+            return orderList[i];
+        }
+    }
+    return nullptr;
+}
+
+
 void Backend::setMaxCusId(){
     if(customerList.empty()){
         MAX_CID=1000;

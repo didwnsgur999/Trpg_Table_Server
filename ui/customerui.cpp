@@ -3,6 +3,7 @@
 
 #include "mycore/backend.h"
 #include <QSharedPointer>
+#include <QMessageBox>
 
 CustomerUI::CustomerUI(QWidget *parent)
     : QWidget(parent)
@@ -22,12 +23,25 @@ CustomerUI::~CustomerUI()
 }
 
 void CustomerUI::on_AddButton_clicked() {
-    QSharedPointer<Customer> newCustomer = QSharedPointer<Customer>::create();
-    newCustomer->setId(ui->PIDLineEdit->text().toInt());
-    newCustomer->setName(ui->NameLineEdit->text());
-    newCustomer->setPwd(ui->PwdLineEdit->text());
-    qDebug()<<"onAddButtonClicked";
-    Backend::getInstance().addCustomer(newCustomer);
+    int id = ui->PIDLineEdit->text().toInt();
+    if(id<=3000||id>=5000) {
+        QMessageBox::warning(this,tr("바운더리"),tr("id를 3000~5000를 사용해주세요."));
+        return;
+    }
+    auto customer = Backend::getInstance().searchCustomerId(id);
+    if(customer!=NULL){
+        QMessageBox::warning(this,tr("변경"),tr("기존 고객의 상태를 변경합니다."));
+        customer->setId(ui->PIDLineEdit->text().toInt());
+        customer->setName(ui->NameLineEdit->text());
+        customer->setPwd(ui->PwdLineEdit->text());
+    }else{
+        QSharedPointer<Customer> newCustomer = QSharedPointer<Customer>::create();
+        newCustomer->setId(ui->PIDLineEdit->text().toInt());
+        newCustomer->setName(ui->NameLineEdit->text());
+        newCustomer->setPwd(ui->PwdLineEdit->text());
+        qDebug()<<"onAddButtonClicked";
+        Backend::getInstance().addCustomer(newCustomer);
+    }
     loadCustomerTable(m_tableMain);
 }
 

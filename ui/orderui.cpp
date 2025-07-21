@@ -3,6 +3,7 @@
 
 #include "mycore/backend.h"
 #include <QSharedPointer>
+#include <QMessageBox>
 
 OrderUI::OrderUI(QWidget *parent)
     : QWidget(parent)
@@ -79,12 +80,26 @@ void OrderUI::on_OToolBox_currentChanged(int index)
 
 void OrderUI::on_AddButton_clicked()
 {
-    QSharedPointer<Order> newOrder = QSharedPointer<Order>::create();
-    newOrder->setId(ui->IDLineEdit->text().toInt());
-    newOrder->setPID(ui->ProductLineEdit->text().toInt());
-    newOrder->setCID(ui->CustomerLineEdit->text().toInt());
-    newOrder->setCnt(ui->ProductCntLineEdit->text().toInt());
-    Backend::getInstance().addOrder(newOrder);
+    int id = ui->IDLineEdit->text().toInt();
+    if(id<5000) {
+        QMessageBox::warning(this,tr("바운더리"),tr("id를 5000이상으로 사용해주세요."));
+        return;
+    }
+    auto order = Backend::getInstance().searchOrderId(id);
+    if(order != NULL){
+        QMessageBox::warning(this,tr("변경"),tr("기존 주문의 상태를 변경합니다."));
+        order->setId(ui->IDLineEdit->text().toInt());
+        order->setPID(ui->ProductLineEdit->text().toInt());
+        order->setCID(ui->CustomerLineEdit->text().toInt());
+        order->setCnt(ui->ProductCntLineEdit->text().toInt());
+    } else {
+        QSharedPointer<Order> newOrder = QSharedPointer<Order>::create();
+        newOrder->setId(ui->IDLineEdit->text().toInt());
+        newOrder->setPID(ui->ProductLineEdit->text().toInt());
+        newOrder->setCID(ui->CustomerLineEdit->text().toInt());
+        newOrder->setCnt(ui->ProductCntLineEdit->text().toInt());
+        Backend::getInstance().addOrder(newOrder);
+    }
     loadOrderTable(m_tableMain);
 }
 

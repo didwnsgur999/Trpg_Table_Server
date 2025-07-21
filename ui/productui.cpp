@@ -30,14 +30,28 @@ ProductUI::~ProductUI()
 void ProductUI::on_AddButton_clicked()
 {
     //새로운 product생성
-    QSharedPointer<Product> newProduct = QSharedPointer<Product>::create();
-    //설정후 집어넣는다.
-    newProduct->setId(ui->PIDLineEdit->text().toInt());
-    newProduct->setName(ui->NameLineEdit->text());
-    newProduct->setPrice(ui->PriceLineEdit->text().toInt());
-    newProduct->setCnt(ui->CntLineEdit->text().toInt());
-    newProduct->setImage(m_selectedImage);
-    Backend::getInstance().addProduct(newProduct);
+    int id = ui->PIDLineEdit->text().toInt();
+    auto product = Backend::getInstance().searchProductId(id);
+    if(id<=1000||id>=3000) {
+        QMessageBox::warning(this,tr("바운더리"),tr("id를 1000~3000를 사용해주세요."));
+        return;
+    }
+    if(product!=nullptr){
+        QMessageBox::warning(this,tr("변경"),tr("기존 제품의 상태를 변경합니다."));
+        product->setId(ui->PIDLineEdit->text().toInt());
+        product->setName(ui->NameLineEdit->text());
+        product->setPrice(ui->PriceLineEdit->text().toInt());
+        product->setCnt(ui->CntLineEdit->text().toInt());
+        product->setImage(m_selectedImage);
+    }else{
+        QSharedPointer<Product> newProduct = QSharedPointer<Product>::create();
+        newProduct->setId(ui->PIDLineEdit->text().toInt());
+        newProduct->setName(ui->NameLineEdit->text());
+        newProduct->setPrice(ui->PriceLineEdit->text().toInt());
+        newProduct->setCnt(ui->CntLineEdit->text().toInt());
+        newProduct->setImage(m_selectedImage);
+        Backend::getInstance().addProduct(newProduct);
+    }
     loadProductTable(m_tableMain);
 }
 //remove
