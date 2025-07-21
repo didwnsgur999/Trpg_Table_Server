@@ -1,7 +1,7 @@
 #include "productui.h"
 #include "ui_productui.h"
 
-#include "backend.h"
+#include "mycore/backend.h"
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>

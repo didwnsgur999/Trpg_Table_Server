@@ -3,7 +3,7 @@
 
 #include <QStandardItemModel>
 #include <QWidget>
-#include "customer.h"
+#include "mycore/customer.h"
 
 namespace Ui {
 class CustomerUI;

@@ -1,7 +1,7 @@
 #include "chatroomui.h"
 #include "ui_chatroomui.h"
 #include <QListView>
-#include "roommanager.h"
+#include "mycore/roommanager.h"
 
 ChatRoomUI::ChatRoomUI(QWidget *parent)
     : QWidget(parent)

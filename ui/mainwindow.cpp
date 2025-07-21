@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include <QDir>            //Directory
-#include "backend.h"       //data
-#include "serverchat.h"    //for chatserver open,close
+#include "mycore/backend.h"       //data
+#include "mycore/serverchat.h"    //for chatserver open,close
 #include "ui_mainwindow.h" //ui
 #include <memory.h>        //uniqueptr
 

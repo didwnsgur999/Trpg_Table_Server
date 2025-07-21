@@ -1,6 +1,6 @@
 #include "debugui.h"
 #include "ui_debugui.h"
-#include "Backend.h"
+#include "mycore/Backend.h"
 
 DebugUI::DebugUI(QWidget *parent)
     : QWidget(parent)

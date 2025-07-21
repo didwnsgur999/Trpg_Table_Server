@@ -3,7 +3,7 @@
 
 #include <QStandardItemModel>
 #include <QWidget>
-#include "product.h"
+#include "mycore/product.h"
 class QFile;
 
 namespace Ui {

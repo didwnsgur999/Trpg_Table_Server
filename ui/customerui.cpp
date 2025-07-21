@@ -1,7 +1,7 @@
 #include "customerui.h"
 #include "ui_customerui.h"
 
-#include "backend.h"
+#include "mycore/backend.h"
 #include <QSharedPointer>
 
 CustomerUI::CustomerUI(QWidget *parent)
