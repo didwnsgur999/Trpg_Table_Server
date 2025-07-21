@@ -60,6 +60,10 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
         ChatHandler::deleteRoomItemHandle(clientSocket, obj);
     } else if (cmd == "mov_r_item"){
         ChatHandler::movRoomItemHandle(clientSocket,obj);
+    } else if (cmd == "list_r_users"){
+        ChatHandler::listRoomUserHandle(clientSocket,obj);
+    } else if (cmd == "list_users"){
+        ChatHandler::listUserHandle(clientSocket,obj);
     }
 }
 void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
@@ -468,4 +472,37 @@ void ChatHandler::movRoomItemHandle(QTcpSocket *clientSocket, const QJsonObject 
         QJsonDocument doc(ret);
         emit sendMessage(clientSocket,doc);
     }
+}
+void ChatHandler::listRoomUserHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    QString roomName = obj["rName"].toString();
+    auto room = RoomManager::getInstance().getRoom(roomName);
+    QJsonArray arr;
+    auto members = room->getRMember();
+    for(auto it = members.begin(); it!=members.end(); it++){
+        QJsonObject userobj;
+        userobj["id"] = it.key();
+        userobj["Name"] = Backend::getInstance().searchCustomerId(it.key())->getName();
+        arr.append(userobj);
+    }
+    QJsonObject ret;
+    ret["cmd"]="ret_list_r_users";
+    ret["rusers"]=arr;
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
+}
+void ChatHandler::listUserHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
+    //그냥 serveruser name 다 보내지 뭐.
+    auto hashUserName = ServerUser::getInstance().getUserName();
+    QJsonArray arr;
+    for(auto it = hashUserName.begin(); it!=hashUserName.end(); it++){
+        QJsonObject userobj;
+        userobj["id"]=it.key();
+        userobj["Name"]=it.value();
+        arr.append(userobj);
+    }
+    QJsonObject ret;
+    ret["cmd"]="ret_list_users";
+    ret["users"]=arr;
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
 }

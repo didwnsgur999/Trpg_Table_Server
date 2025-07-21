@@ -16,6 +16,7 @@ public:
     bool RemoveUser(QTcpSocket *userSocket);
 
     //왠만하면 Id랑 QTcpSocket*으로 상대방 찾을수 잇으면 좋겠는데?
+    QHash<int,QString>& getUserName(){return m_userName;}
     int SearchIdSocket(QTcpSocket *);
     QTcpSocket *SearchSocketId(int userId);
     int SearchIdName(QString userName);
