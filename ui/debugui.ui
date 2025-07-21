@@ -20,7 +20,7 @@
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <widget class="MyGraphicsView" name="myGraphicsView"/>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QListView" name="listView"/>
@@ -42,7 +42,7 @@
   <customwidget>
    <class>MyGraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>mygraphicsview.h</header>
+   <header>graphics/mygraphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
