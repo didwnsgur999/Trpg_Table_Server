@@ -80,11 +80,11 @@ bool Room::searchColXYItem(int &x, int &y){
 }
 
 void Room::clearall(){
-
+    m_item.clear();
+    Max_iid=0;
 }
 
 void Room::logMessage(const QString &msg)
 {
     m_logworker->enqueueLog(msg);
 }
-

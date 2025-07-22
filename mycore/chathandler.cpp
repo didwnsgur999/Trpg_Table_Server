@@ -64,6 +64,8 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
         ChatHandler::listRoomUserHandle(clientSocket,obj);
     } else if (cmd == "list_users"){
         ChatHandler::listUserHandle(clientSocket,obj);
+    } else if (cmd == "list_r_items"){
+        ChatHandler::listRoomItemHandle(clientSocket,obj);
     }
 }
 void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
@@ -501,6 +503,22 @@ void ChatHandler::listUserHandle(QTcpSocket *clientSocket, const QJsonObject &ob
     QJsonObject ret;
     ret["cmd"]="ret_list_users";
     ret["users"]=arr;
+    QJsonDocument doc(ret);
+    emit sendMessage(clientSocket,doc);
+}
+
+void ChatHandler::listRoomItemHandle(QTcpSocket *clientSocket,const QJsonObject &obj){
+    //room Item 보내줘야됨
+    QString rName = obj["rName"].toString();
+    auto room = RoomManager::getInstance().getRoom(rName);
+    auto Itemlist = room->getRItem();
+    QJsonArray arr;
+    for(auto item:Itemlist ){
+        arr.append(item.toJson());
+    }
+    QJsonObject ret;
+    ret["cmd"]="ret_list_r_items";
+    ret["RoomItems"]=arr;
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
 }

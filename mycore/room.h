@@ -20,6 +20,7 @@ public:
     int getRMId() const {return m_RMId;}
     const QHash<int, QTcpSocket *> &getRMember() const {return m_rMember;}
     int getRCnt() const {return m_rCnt;}
+    const QList<RoomItem>& getRItem() const {return m_item;}
     //int getItem() const {return }
     //room item 추가제거
     RoomItem addRoomItem(int pId, QString pName);
