@@ -47,9 +47,7 @@ bool RoomManager::joinRoom(const QString &roomName,QTcpSocket *socket){
     }
     auto room = m_rooms.value(roomName);
     //방있고, 사람 있으면
-    //이제 방 들어가야됨
     //룸에 들어가는 처리
-    //대신 다른 룸에는 이미 없다고 가정해야됨.
     room->addMem(userId,socket);
     return true;
 }
@@ -80,6 +78,7 @@ QSharedPointer<Room> RoomManager::getRoom(const QString &roomName)
         return m_rooms[roomName];
     return QSharedPointer<Room>(nullptr);
 }
+
 QVector<QSharedPointer<Room>> RoomManager::getAllRoom(){
     QVector<QSharedPointer<Room>> vec;
     for(auto i:m_rooms){

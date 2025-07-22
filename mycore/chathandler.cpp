@@ -518,7 +518,7 @@ void ChatHandler::listRoomItemHandle(QTcpSocket *clientSocket,const QJsonObject 
     }
     QJsonObject ret;
     ret["cmd"]="ret_list_r_items";
-    ret["RoomItems"]=arr;
+    ret["rItems"]=arr;
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
 }
