@@ -79,10 +79,12 @@ bool Room::searchColXYItem(int &x, int &y){
     return 1;
 }
 
+void Room::clearall(){
+
+}
 
 void Room::logMessage(const QString &msg)
 {
     m_logworker->enqueueLog(msg);
 }
-
 

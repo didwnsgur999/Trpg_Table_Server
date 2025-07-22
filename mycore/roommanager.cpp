@@ -29,6 +29,7 @@ bool RoomManager::deleteRoom(const QString &roomName)
         return false;
     }
     //방 지우기.
+    room->clearall();
     m_rooms.remove(roomName);
 
     return true;

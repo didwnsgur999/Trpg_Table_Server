@@ -25,6 +25,8 @@ public:
     RoomItem addRoomItem(int pId, QString pName);
     bool delRoomItem(int iid);
     bool movRoomItem(int iid,int x,int y,int z,int* finx,int *finy,int *finz);
+    //room clear;
+    void clearall();
     //충돌 방어용.
     bool searchColXYItem(int &x, int &y);
 

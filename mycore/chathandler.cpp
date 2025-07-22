@@ -289,9 +289,7 @@ void ChatHandler::leaveRoomHandle(QTcpSocket *clientSocket, const QJsonObject &o
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
 }
-//===================
-//on the work
-//==================
+
 void ChatHandler::listProductHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     qDebug()<< "list product";
     auto vec = Backend::getInstance().getProductList();
