@@ -24,8 +24,8 @@ CustomerUI::~CustomerUI()
 
 void CustomerUI::on_AddButton_clicked() {
     int id = ui->PIDLineEdit->text().toInt();
-    if(id<=3000||id>=5000) {
-        QMessageBox::warning(this,tr("바운더리"),tr("id를 3000~5000를 사용해주세요."));
+    if(id<=1000||id>=3000) {
+        QMessageBox::warning(this,tr("바운더리"),tr("id를 1000~3000를 사용해주세요."));
         return;
     }
     auto customer = Backend::getInstance().searchCustomerId(id);
