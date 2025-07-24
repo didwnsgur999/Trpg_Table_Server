@@ -46,7 +46,6 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
         // on the work - no debug
         ChatHandler::joinRoomHandle(clientSocket, obj);
     } else if (cmd == "leave_r"){ // 채팅방 나가기
-        // on the work - no debug
         ChatHandler::leaveRoomHandle(clientSocket, obj);
     } else if (cmd == "add_r_item"){ // 채팅방 아이템 추가
         ChatHandler::addRoomItemHandle(clientSocket, obj);
@@ -62,6 +61,8 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
         ChatHandler::listRoomItemHandle(clientSocket,obj);
     } else if (cmd == "invite_r"){ //초대처리
         ChatHandler::inviteRoomUser(clientSocket,obj);
+    } else if (cmd == "ban_r_user"){ //강퇴처리
+        ChatHandler::banRoomUser(clientSocket,obj);
     }
 }
 void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
@@ -538,6 +539,53 @@ void ChatHandler::inviteRoomUser(QTcpSocket *clientSocket,const QJsonObject &obj
         ret["text"]="failure";
         QJsonDocument doc(ret);
         //이건 본인한테 보내는거
+        emit sendMessage(clientSocket,doc);
+    }
+}
+void ChatHandler::banRoomUser(QTcpSocket *clientSocket,const QJsonObject &obj){
+    QString rName = obj["rName"].toString();
+    int mid = obj["mid"].toInt();
+    int cid = obj["cid"].toInt();
+    auto room = RoomManager::getInstance().getRoom(rName);
+    bool qualify=false;
+    if(!(room==nullptr)){
+        if(room->getRMId()==mid){
+            qualify=true;
+        }
+    }
+    //qualify = true, socket존재 -> ban가능.
+    //qualify = false -> 권한없음 돌려줌
+    //qualify = true, socket null -> 이미 나간사람.
+    auto Socket = ServerUser::getInstance().SearchSocketId(cid);
+
+    QJsonObject ret;
+    ret["cmd"]="ret_ban_r";
+    //권한있음
+    if(qualify==true){
+        if(Socket==nullptr){
+            ret["text"]="유저 접속 종료됨";
+            QJsonDocument doc(ret);
+            //본인에게 결과 보냄
+            emit sendMessage(clientSocket,doc);
+        }else{
+            //상대방 leave room시킴 이미 나갔으면 후처리 필요없음 그냥 인과가 같음.
+            if(RoomManager::getInstance().leaveRoom(rName,Socket)){
+                ret["cmd"]="ret_leave_r";
+                ret["text"]="success";
+                QJsonDocument doc(ret);
+                emit sendMessage(Socket,doc);
+                //그리고 밴됬다는 사실 알려줘야됨.
+                QJsonObject ban;
+                ban["cmd"]="ret_banned_r";
+                //상대방 죽임.
+                QJsonDocument docban(ban);
+                emit sendMessage(Socket,docban);
+            }
+        }
+    } else {
+        ret["text"]="방장 권한 없음";
+        QJsonDocument doc(ret);
+        //본인에게 결과 보냄
         emit sendMessage(clientSocket,doc);
     }
 }
