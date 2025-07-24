@@ -20,52 +20,48 @@ void ChatHandler::getByteData(QTcpSocket *clientSocket, QByteArray &data)
     QString cmd = obj.value("cmd").toString();
 
     //이 아래가 signal처리 connect는 기본적으로 되어있어야한다.
-    if (cmd == "login") {
+    if (cmd == "login") { //로그인 처리
         ChatHandler::loginHandle(clientSocket, obj);
-    } else if (cmd == "chat") {
-        // on the work - no debug
+    } else if (cmd == "chat") { // 채팅 처리
         ChatHandler::chatHandle(clientSocket, obj);
-    } else if (cmd == "list_p"){
-        //on the work
+    } else if (cmd == "list_p"){ // 제품 목록 요청
         ChatHandler::listProductHandle(clientSocket, obj);
-    }else if (cmd == "add_p") {
+    }else if (cmd == "add_p") { // 제품 추가 요청
         ChatHandler::productAddHandle(clientSocket, obj);
-    } else if (cmd == "list_c"){
-        //on the work
+    } else if (cmd == "list_c"){ // 고객 목록 요청
         ChatHandler::listCustomerHandle(clientSocket, obj);
-    }else if (cmd == "add_c") {
+    }else if (cmd == "add_c") { // 고객 생성 - 회원가입
         ChatHandler::customerAddHandle(clientSocket, obj);
-    }else if (cmd == "list_o"){
-        //on the work
+    }else if (cmd == "list_o"){ //주문 목록 요청
         ChatHandler::listOrderHandle(clientSocket,obj);
-    }else if (cmd == "add_o") {
+    }else if (cmd == "add_o") { //주문 생성
         ChatHandler::orderAddHandle(clientSocket, obj);
-    } else if (cmd == "list_r") {
+    } else if (cmd == "list_r") { // 채팅방 목록 전부 요청
         ChatHandler::listRoomHandle(clientSocket, obj);
-    } else if (cmd == "add_r") {
-        // on the work - no debug
+    } else if (cmd == "add_r") { //채팅방 추가하기
         ChatHandler::addRoomHandle(clientSocket, obj);
-    } else if (cmd == "delete_r"){
-        // on the work - no debug
+    } else if (cmd == "delete_r"){ // 채팅방 지우기
         ChatHandler::deleteRoomHandle(clientSocket, obj);
-    } else if (cmd == "join_r"){
+    } else if (cmd == "join_r"){ // 채팅방 들어가기
         // on the work - no debug
         ChatHandler::joinRoomHandle(clientSocket, obj);
-    } else if (cmd == "leave_r"){
+    } else if (cmd == "leave_r"){ // 채팅방 나가기
         // on the work - no debug
         ChatHandler::leaveRoomHandle(clientSocket, obj);
-    } else if (cmd == "add_r_item"){
+    } else if (cmd == "add_r_item"){ // 채팅방 아이템 추가
         ChatHandler::addRoomItemHandle(clientSocket, obj);
-    } else if (cmd == "del_r_item"){
+    } else if (cmd == "del_r_item"){ // 채팅방 아이템 지우기
         ChatHandler::deleteRoomItemHandle(clientSocket, obj);
-    } else if (cmd == "mov_r_item"){
+    } else if (cmd == "mov_r_item"){ // 채팅방 아이템 움직임
         ChatHandler::movRoomItemHandle(clientSocket,obj);
-    } else if (cmd == "list_r_users"){
+    } else if (cmd == "list_r_users"){ //채팅방 유저 전부 요청
         ChatHandler::listRoomUserHandle(clientSocket,obj);
-    } else if (cmd == "list_users"){
+    } else if (cmd == "list_users"){ //현재 유저 전부 요청
         ChatHandler::listUserHandle(clientSocket,obj);
-    } else if (cmd == "list_r_items"){
+    } else if (cmd == "list_r_items"){ //채팅방 아이템 전부 요청
         ChatHandler::listRoomItemHandle(clientSocket,obj);
+    } else if (cmd == "invite_r"){ //초대처리
+        ChatHandler::inviteRoomUser(clientSocket,obj);
     }
 }
 void ChatHandler::loginHandle(QTcpSocket *clientSocket, const QJsonObject &obj)
@@ -521,4 +517,27 @@ void ChatHandler::listRoomItemHandle(QTcpSocket *clientSocket,const QJsonObject 
     ret["rItems"]=arr;
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
+}
+void ChatHandler::inviteRoomUser(QTcpSocket *clientSocket,const QJsonObject &obj){
+    QString rName = obj["rName"].toString();
+    int cid = obj["cid"].toInt();
+
+    auto Socket = ServerUser::getInstance().SearchSocketId(cid);
+
+    QJsonObject ret;
+    ret["cmd"]="ret_invite_r";
+    //socket is not nullptr
+    if(Socket!=nullptr){
+        ret["text"]="success";
+        ret["rName"]=rName;
+
+        QJsonDocument doc(ret);
+        //이건 다른 유저한테 보내는거
+        emit sendMessage(Socket,doc);
+    } else {
+        ret["text"]="failure";
+        QJsonDocument doc(ret);
+        //이건 본인한테 보내는거
+        emit sendMessage(clientSocket,doc);
+    }
 }

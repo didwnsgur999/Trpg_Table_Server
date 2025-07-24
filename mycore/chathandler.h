@@ -40,6 +40,7 @@ private:
     void listRoomUserHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void listUserHandle(QTcpSocket *clientSocket, const QJsonObject &obj);
     void listRoomItemHandle(QTcpSocket *clientSocket,const QJsonObject &obj);
+    void inviteRoomUser(QTcpSocket *clientSocket,const QJsonObject &obj);
     //채팅방 로그 관련 시퀀스
 signals:
     void sendMessage(QTcpSocket* clientSocket,const QJsonDocument &doc);
