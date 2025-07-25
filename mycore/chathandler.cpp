@@ -258,6 +258,7 @@ void ChatHandler::joinRoomHandle(QTcpSocket *clientSocket, const QJsonObject &ob
 
     QJsonObject ret;
     ret["cmd"] = "ret_join_r";
+    //방이름을 기반으로 입장 처리
     if(RoomManager::getInstance().joinRoom(rName,clientSocket)){
         ret["text"] = "success";
         ret["rName"] = rName;
@@ -279,6 +280,7 @@ void ChatHandler::leaveRoomHandle(QTcpSocket *clientSocket, const QJsonObject &o
     if(RoomManager::getInstance().leaveRoom(rName,clientSocket)){
         ret["text"] = "success";
         if(RoomManager::getInstance().getRoom(rName)->getRCnt()==0){
+            qDebug()<<"eraseRoom";
             RoomManager::getInstance().deleteRoom(rName);
         }
     } else {
@@ -366,9 +368,7 @@ void ChatHandler::listCustomerHandle(QTcpSocket *clientSocket, const QJsonObject
     QJsonDocument doc(ret);
     emit sendMessage(clientSocket,doc);
 }
-//===================//
-//here
-//===================//
+
 void ChatHandler::addRoomItemHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     //특정 방에 뭐 추가하라고 준거잖음? 그럼 방 이름도 줘야지?
     qDebug()<<"add room item";
@@ -434,6 +434,7 @@ void ChatHandler::deleteRoomItemHandle(QTcpSocket *clientSocket, const QJsonObje
         emit sendMessage(clientSocket,doc);
     }
 }
+//서버가 받은 데이터 다시보내줌.
 void ChatHandler::movRoomItemHandle(QTcpSocket *clientSocket, const QJsonObject &obj){
     qDebug()<<"server: moveRoom handler called";
     int iid = obj["iid"].toInt();
