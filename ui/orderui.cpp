@@ -11,9 +11,9 @@ OrderUI::OrderUI(QWidget *parent)
 {
     ui->setupUi(this);
     m_tableMain = new QStandardItemModel(0, 4, this);
-    m_tableMain->setHorizontalHeaderLabels({tr("주문ID"),tr("고객ID"), tr("제품ID"), tr("제품 수량")});
+    m_tableMain->setHorizontalHeaderLabels({tr("order ID"),tr("customer ID"), tr("product ID"), tr("product count")});
     m_tableSearch = new QStandardItemModel(0, 4, this);
-    m_tableSearch->setHorizontalHeaderLabels({tr("주문ID"),tr("고객ID"), tr("제품ID"), tr("제품 수량")});
+    m_tableSearch->setHorizontalHeaderLabels({tr("order ID"),tr("customer ID"), tr("product ID"), tr("product count")});
     ui->OToolBox->setCurrentIndex(0);
 }
 
@@ -82,12 +82,12 @@ void OrderUI::on_AddButton_clicked()
 {
     int id = ui->IDLineEdit->text().toInt();
     if(id<5000) {
-        QMessageBox::warning(this,tr("바운더리"),tr("id를 5000이상으로 사용해주세요."));
+        QMessageBox::warning(this,tr("boundary"),tr("please use id over 5000"));
         return;
     }
     auto order = Backend::getInstance().searchOrderId(id);
     if(order != NULL){
-        QMessageBox::warning(this,tr("변경"),tr("기존 주문의 상태를 변경합니다."));
+        QMessageBox::warning(this,tr("change"),tr("change current order information"));
         order->setId(ui->IDLineEdit->text().toInt());
         order->setPID(ui->ProductLineEdit->text().toInt());
         order->setCID(ui->CustomerLineEdit->text().toInt());

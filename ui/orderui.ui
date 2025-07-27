@@ -34,19 +34,19 @@
      <widget class="QTableView" name="MainTableView"/>
      <widget class="QToolBox" name="OToolBox">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="OInput">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>158</width>
+         <width>281</width>
          <height>554</height>
         </rect>
        </property>
        <attribute name="label">
-        <string>주문 추가/변경</string>
+        <string>order add/delete</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
@@ -54,7 +54,7 @@
           <item>
            <widget class="QLabel" name="IDlabel">
             <property name="text">
-             <string>주문 ID</string>
+             <string>order ID</string>
             </property>
            </widget>
           </item>
@@ -68,7 +68,7 @@
           <item>
            <widget class="QLabel" name="CustomerLabel">
             <property name="text">
-             <string>회원 ID</string>
+             <string>customer ID</string>
             </property>
            </widget>
           </item>
@@ -82,7 +82,7 @@
           <item>
            <widget class="QLabel" name="ProductLabel">
             <property name="text">
-             <string>제품 ID</string>
+             <string>product ID</string>
             </property>
            </widget>
           </item>
@@ -96,7 +96,7 @@
           <item>
            <widget class="QLabel" name="ProductCntLabel">
             <property name="text">
-             <string>제품 개수</string>
+             <string>product count</string>
             </property>
            </widget>
           </item>
@@ -121,14 +121,14 @@
         <item>
          <widget class="QPushButton" name="AddButton">
           <property name="text">
-           <string>주문 추가/변경</string>
+           <string>add/change order</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="DeleteButton">
           <property name="text">
-           <string>주문 삭제</string>
+           <string>delete order</string>
           </property>
          </widget>
         </item>
@@ -152,12 +152,12 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>158</width>
+         <width>281</width>
          <height>554</height>
         </rect>
        </property>
        <attribute name="label">
-        <string>주문 검색</string>
+        <string>order search</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
@@ -196,7 +196,7 @@
         <item>
          <widget class="QPushButton" name="SearchButton">
           <property name="text">
-           <string>검색</string>
+           <string>search</string>
           </property>
          </widget>
         </item>

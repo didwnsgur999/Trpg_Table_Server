@@ -11,9 +11,9 @@ CustomerUI::CustomerUI(QWidget *parent)
 {
     ui->setupUi(this);
     m_tableMain = new QStandardItemModel(0, 3, this);
-    m_tableMain->setHorizontalHeaderLabels({tr("고객번호"), tr("고객명"), tr("고객PWD")});
+    m_tableMain->setHorizontalHeaderLabels({tr("user id"), tr("user name"), tr("user PWD")});
     m_tableSearch = new QStandardItemModel(0, 3, this);
-    m_tableSearch->setHorizontalHeaderLabels({tr("고객번호"), tr("고객명"), tr("고객PWD")});
+    m_tableSearch->setHorizontalHeaderLabels({tr("user id"), tr("user name"), tr("user PWD")});
     ui->CToolBox->setCurrentIndex(0);
 }
 
@@ -25,12 +25,12 @@ CustomerUI::~CustomerUI()
 void CustomerUI::on_AddButton_clicked() {
     int id = ui->PIDLineEdit->text().toInt();
     if(id<=1000||id>=3000) {
-        QMessageBox::warning(this,tr("바운더리"),tr("id를 1000~3000를 사용해주세요."));
+        QMessageBox::warning(this,tr("boundary"),tr("please use id 1000~3000"));
         return;
     }
     auto customer = Backend::getInstance().searchCustomerId(id);
     if(customer!=NULL){
-        QMessageBox::warning(this,tr("변경"),tr("기존 고객의 상태를 변경합니다."));
+        QMessageBox::warning(this,tr("change"),tr("change current customer information"));
         customer->setId(ui->PIDLineEdit->text().toInt());
         customer->setName(ui->NameLineEdit->text());
         customer->setPwd(ui->PwdLineEdit->text());
