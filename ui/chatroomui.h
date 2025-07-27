@@ -2,7 +2,8 @@
 #define CHATROOMUI_H
 
 #include <QWidget>
-#include <QStandardItemModel>
+#include <QListWidgetItem>
+#include <QDir>
 
 namespace Ui {
 class ChatRoomUI;
@@ -17,13 +18,17 @@ public:
     ~ChatRoomUI();
 
     void addAllRoom();
+    void loadLogFiles(const QString &path);
+    const QString& getPath() const {return m_logPath;}
 
 private slots:
-    void on_debugButton_clicked();
+    void on_LogLoadButton_clicked();
+
+    void on_LogListWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::ChatRoomUI *ui;
-    QStandardItemModel* m_roomListView;
+    QString m_logPath;
 };
 
 #endif // CHATROOMUI_H

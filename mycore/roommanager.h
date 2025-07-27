@@ -21,6 +21,9 @@ public:
     //room찾아오기 함수. sharedptr는 복사해도 참조 카운트만 늘어서 &별로 필요없대요.
     QSharedPointer<Room> getRoom(const QString &roomName);
     QVector<QSharedPointer<Room>> getAllRoom();
+    void removeRoomUserId(int id);
+
+
 
 private:
     // 복사 방지, 생성방지

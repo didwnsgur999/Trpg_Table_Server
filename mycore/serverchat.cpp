@@ -3,6 +3,7 @@
 #include <QtNetwork>
 #include <QtWidgets>
 #include "serveruser.h"
+#include "roommanager.h"
 
 #define BLOCK_SIZE 1024
 #define TCP_PORT 30800 //Random num fix
@@ -31,8 +32,9 @@ void ServerChat::clientConnect()
     QTcpSocket *clientConnection = m_tcpServer->nextPendingConnection();
     //끊어지면 없애기
     connect(clientConnection, &QTcpSocket::disconnected, this, [=](){
-        //서버 접속자에서 빼기 + 방에 있다면 정리하기
-
+        //서버 접속자에서 빼기 + 방에 있다면 정리하기 -1이면 예외처리.
+        int id = ServerUser::getInstance().SearchIdSocket(clientConnection);
+        if(id != -1) RoomManager::getInstance().removeRoomUserId(id);
         ServerUser::getInstance().RemoveUser(clientConnection);
         clientConnection->deleteLater();
     });
