@@ -2,7 +2,6 @@
 #define CHATROOMUI_H
 
 #include <QWidget>
-#include <QStandardItemModel>
 #include <QListWidgetItem>
 #include <QDir>
 
@@ -18,7 +17,7 @@ public:
     explicit ChatRoomUI(QWidget *parent = nullptr);
     ~ChatRoomUI();
 
-    //void addAllRoom();
+    void addAllRoom();
     void loadLogFiles(const QString &path);
     const QString& getPath() const {return m_logPath;}
 

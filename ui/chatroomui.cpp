@@ -1,6 +1,6 @@
 #include "chatroomui.h"
 #include "ui_chatroomui.h"
-#include <QListView>
+#include <QListWidget>
 #include <QFile>
 #include <QTextStream>
 #include "mycore/roommanager.h"
@@ -39,19 +39,20 @@ void ChatRoomUI::loadLogFiles(const QString &path){
     m_logPath = path;
 }
 
-// void ChatRoomUI::addAllRoom() {
-//     auto vec = RoomManager::getInstance().getAllRoom();
-//     ui->LogListWidget->clear();
-//     for(auto i:vec){
-//         QString text = QString("%1 || 인원 : %2").arg(i->getRName(),QString::number(i->getRCnt()));
-//         QStandardItem* item = new QStandardItem(text);
-//         ui->LogListWidget->addItem(item);
-//     }
-// }
+void ChatRoomUI::addAllRoom() {
+    auto vec = RoomManager::getInstance().getAllRoom();
+    ui->RoomListWidget->clear();
+    for(auto i:vec){
+        QString text = QString("%1 || 인원 : %2").arg(i->getRName(),QString::number(i->getRCnt()));
+        QListWidgetItem* item = new QListWidgetItem(text);
+        ui->RoomListWidget->addItem(item);
+    }
+}
 
 void ChatRoomUI::on_LogLoadButton_clicked()
 {
-    ChatRoomUI::loadLogFiles(m_logPath);
+    loadLogFiles(m_logPath);
+    addAllRoom();
 }
 //로그 열기
 void ChatRoomUI::on_LogListWidget_itemDoubleClicked(QListWidgetItem *item)

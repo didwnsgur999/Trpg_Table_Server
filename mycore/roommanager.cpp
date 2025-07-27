@@ -81,8 +81,20 @@ QSharedPointer<Room> RoomManager::getRoom(const QString &roomName)
 
 QVector<QSharedPointer<Room>> RoomManager::getAllRoom(){
     QVector<QSharedPointer<Room>> vec;
-    for(auto i:m_rooms){
+    for(const auto& i:m_rooms){
         vec.append(i);
     }
     return vec;
+}
+
+void RoomManager::removeRoomUserId(int id){
+    for(const auto& room:m_rooms){
+        if(room->hasMember(id)){
+            room->deleteMem(id);
+            if(room->getRCnt()==0){
+                deleteRoom(room->getRName());
+            }
+            return;
+        }
+    }
 }

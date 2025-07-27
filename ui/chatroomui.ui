@@ -19,10 +19,13 @@
      <property name="orientation">
       <enum>Qt::Orientation::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QListWidget" name="LogListWidget"/>
+       </item>
+       <item>
+        <widget class="QListWidget" name="RoomListWidget"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -42,7 +45,7 @@
          <item>
           <widget class="QPushButton" name="LogLoadButton">
            <property name="text">
-            <string>로그 새로고침</string>
+            <string>로그 / 채팅방 새로고침</string>
            </property>
           </widget>
          </item>

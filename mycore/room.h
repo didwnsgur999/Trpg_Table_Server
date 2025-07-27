@@ -13,6 +13,10 @@ public:
     //방에 멤버 넣기
     void addMem(int Id,QTcpSocket* socket);
     void deleteMem(int Id);
+    bool hasMember(int id) const;
+    //접속 종료시 id로 찾아서 제거
+
+
     //방 방장 변경하기
 
     //getter setters

@@ -21,6 +21,10 @@ Room::~Room()
     delete m_logworker;
 }
 
+bool Room::hasMember(int id) const {
+    return m_rMember.contains(id);
+}
+
 void Room::addMem(int Id,QTcpSocket* socket){
     if (!m_rMember.contains(Id)) {
         m_rMember[Id] = socket;
