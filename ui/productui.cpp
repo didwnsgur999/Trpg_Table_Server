@@ -16,9 +16,9 @@ ProductUI::ProductUI(QWidget *parent)
     ui->setupUi(this);
     //table모델 생성
     m_tableMain = new QStandardItemModel(0, 4, this);
-    m_tableMain->setHorizontalHeaderLabels({tr("제품번호"), tr("제품명"), tr("가격"), tr("수량")});
+    m_tableMain->setHorizontalHeaderLabels({tr("product id"), tr("product name"), tr("product cost"), tr("product count")});
     m_tableSearch = new QStandardItemModel(0, 4, this);
-    m_tableSearch->setHorizontalHeaderLabels({tr("제품번호"), tr("제품명"), tr("가격"), tr("수량")});
+    m_tableSearch->setHorizontalHeaderLabels({tr("product id"), tr("product name"), tr("product cost"), tr("product count")});
     ui->PToolBox->setCurrentIndex(0);
 }
 
@@ -33,11 +33,11 @@ void ProductUI::on_AddButton_clicked()
     int id = ui->PIDLineEdit->text().toInt();
     auto product = Backend::getInstance().searchProductId(id);
     if(id<=3000||id>=5000) {
-        QMessageBox::warning(this,tr("바운더리"),tr("id를 3000~5000를 사용해주세요."));
+        QMessageBox::warning(this,tr("boundary"),tr("please use id 3000~5000"));
         return;
     }
     if(product!=nullptr){
-        QMessageBox::warning(this,tr("변경"),tr("기존 제품의 상태를 변경합니다."));
+        QMessageBox::warning(this,tr("change"),tr("change current product information"));
         product->setId(ui->PIDLineEdit->text().toInt());
         product->setName(ui->NameLineEdit->text());
         product->setPrice(ui->PriceLineEdit->text().toInt());
@@ -129,14 +129,14 @@ void ProductUI::on_ImageButton_clicked()
 
 void ProductUI::openFile(){
     fileName = QFileDialog::getOpenFileName(this,
-                                            tr("이미지 선택"),
+                                            tr("select image"),
                                             "",
                                             tr("Images (*.png *.jpg *.jpeg *.bmp)"));
     if(fileName.isEmpty())
         return;
     QPixmap pixmap;
     if(!pixmap.load(fileName)){
-        QMessageBox::warning(this, tr("오류"), tr("이미지를 불러올 수 없습니다."));
+        QMessageBox::warning(this, tr("error"), tr("cannot load this image"));
         return;
     }
     m_selectedImage = pixmap;

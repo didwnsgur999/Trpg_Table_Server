@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (!ServerChat::getInstance().OpenServer()) {
         qDebug() << "unable to open server\n";
     } else {
-        this->setWindowTitle(tr("서버 포트번호: %1").arg(ServerChat::getInstance().getPort()));
+        this->setWindowTitle(tr("server port: %1").arg(ServerChat::getInstance().getPort()));
     }
 
     // UI 생성
@@ -25,11 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     m_debugUI = new DebugUI(this);
 
     // 스택에 추가 먼저 넣은 순서대로 0, 1, 2... 이다.
-    ui->MainTabWidget->addTab(m_customerUI, tr("고객 정보"));
-    ui->MainTabWidget->addTab(m_productUI, tr("제품 정보"));
-    ui->MainTabWidget->addTab(m_orderUI, tr("주문 정보"));
-    ui->MainTabWidget->addTab(m_chatRoomUI,tr("채팅방 확인"));
-    ui->MainTabWidget->addTab(m_debugUI,tr("디버그"));
+    ui->MainTabWidget->addTab(m_customerUI, tr("customer information"));
+    ui->MainTabWidget->addTab(m_productUI, tr("product information"));
+    ui->MainTabWidget->addTab(m_orderUI, tr("order information"));
+    ui->MainTabWidget->addTab(m_chatRoomUI,tr("Chatlog information"));
+    ui->MainTabWidget->addTab(m_debugUI,tr("debug"));
     // 첫 화면은 고객정보
     ui->MainTabWidget->setCurrentIndex(0);
 }

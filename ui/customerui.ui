@@ -37,19 +37,19 @@
        <enum>QFrame::Shape::StyledPanel</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="CInput">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>112</width>
+         <width>195</width>
          <height>387</height>
         </rect>
        </property>
        <attribute name="label">
-        <string>고객 추가/변경</string>
+        <string>customer add/delete</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
@@ -94,7 +94,7 @@
                </size>
               </property>
               <property name="text">
-               <string>이름 </string>
+               <string>name</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -151,14 +151,14 @@
           <item>
            <widget class="QPushButton" name="AddButton">
             <property name="text">
-             <string>추가 / 변경</string>
+             <string>add/change customer</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="DeleteButton">
             <property name="text">
-             <string>제거</string>
+             <string>deletee customer</string>
             </property>
            </widget>
           </item>
@@ -184,12 +184,12 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>112</width>
+         <width>195</width>
          <height>387</height>
         </rect>
        </property>
        <attribute name="label">
-        <string>고객 찾기</string>
+        <string>customer search</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>

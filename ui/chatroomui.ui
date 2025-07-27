@@ -45,7 +45,7 @@
          <item>
           <widget class="QPushButton" name="LogLoadButton">
            <property name="text">
-            <string>로그 / 채팅방 새로고침</string>
+            <string>reload log/chatRoom</string>
            </property>
           </widget>
          </item>
